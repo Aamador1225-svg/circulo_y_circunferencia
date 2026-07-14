@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio: Círculo y Circunferencia</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #0ea5e9;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text: #334155;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --warning: #ea580c;
+            --purple: #7c3aed;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1300px; margin: 0 auto; }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* DISEÑO DE DOS COLUMNAS UNIFICADAS */
+        .layout {
+            display: grid;
+            grid-template-columns: 4fr 6fr; /* 40% Teoría, 60% Laboratorio */
+            gap: 25px;
+            align-items: start;
+        }
+
+        @media (max-width: 1000px) {
+            .layout { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--surface);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        h2 { 
+            color: var(--primary-dark); 
+            margin-bottom: 15px; 
+            border-bottom: 2px solid var(--border); 
+            padding-bottom: 8px; 
+            font-size: 1.3rem;
+        }
+        
+        h3 { color: var(--secondary); margin-top: 15px; margin-bottom: 10px; font-size: 1.1rem; }
+
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 6px; color: var(--text); }
+        
+        input[type="number"], select {
+            width: 100%; padding: 10px 12px; border: 1px solid var(--border);
+            border-radius: 6px; font-size: 15px; outline: none; background: #fff;
+        }
+        input[type="number"]:focus, select:focus { border-color: var(--primary); }
+        input[type="range"] { width: 100%; margin-top: 10px; cursor: pointer; }
+
+        .input-row { display: flex; gap: 15px; align-items: center; }
+        .input-row > div { flex: 1; }
+
+        /* Tipografía MathML y Espaciado de Procedimientos */
+        math {
+            font-family: 'Cambria Math', 'Latin Modern Math', serif;
+            font-size: 1.35em;
+        }
+
+        .procedimiento-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--secondary);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .procedimiento-box.inverse { border-left-color: var(--purple); }
+        .procedimiento-box.conversor { border-left-color: var(--success); }
+
+        .step-line {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+        .step-line:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        
+        .step-label {
+            font-size: 0.85em; font-weight: bold; color: #64748b; 
+            text-transform: uppercase; min-width: 120px;
+        }
+
+        canvas {
+            display: block; width: 100%; max-width: 450px; margin: 0 auto 20px auto;
+            background: #ffffff; border: 1px dashed var(--border); border-radius: 8px;
+        }
+
+        .theory-list { margin-left: 25px; margin-bottom: 15px; }
+        .theory-list li { margin-bottom: 8px; text-align: justify; }
+        .definition { background: #e0f2fe; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #bae6fd; font-size: 1rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Laboratorio: Círculo y Circunferencia</h1>
+        <p>Análisis Algebraico Paso a Paso, Geometría y Fórmulas Exactas</p>
+    </header>
+
+    <div class="layout">
+        <!-- COLUMNA IZQUIERDA: TEORÍA Y CONVERSIONES -->
+        <div class="column">
+            <div class="card">
+                <h2>1. Teoría y Elementos Notables</h2>
+                <div class="definition">
+                    <p><strong>Circunferencia (C):</strong> Es el perímetro o contorno. Todos sus puntos equidistan del centro.</p>
+                    <p style="margin-top: 8px;"><strong>Círculo (A):</strong> Es el área plana interior delimitada por la circunferencia.</p>
+                </div>
+                
+                <ul class="theory-list">
+                    <li><strong>Radio (r):</strong> Distancia del centro al borde.</li>
+                    <li><strong>Diámetro (D):</strong> Cuerda mayor que pasa por el centro (D = 2r).</li>
+                    <li><strong>Arco (s):</strong> Segmento curvo de la circunferencia.</li>
+                    <li><strong>Sector Circular:</strong> Área delimitada por dos radios y un arco.</li>
+                </ul>
+
+                <h3>Fórmulas Principales:</h3>
+                <div class="procedimiento-box" style="border-left-color: var(--primary);">
+                    <div class="step-line"><span class="step-label">Circunferencia</span> <math><mi>C</mi><mo>=</mo><mn>2</mn><mi>π</mi><mi>r</mi></math></div>
+                    <div class="step-line"><span class="step-label">Área Círculo</span> <math><mi>A</mi><mo>=</mo><mi>π</mi><msup><mi>r</mi><mn>2</mn></msup></math></div>
+                    <div class="step-line"><span class="step-label">Longitud de Arco</span> <math><mi>s</mi><mo>=</mo><mfrac><mi>θ</mi><mrow><mn>180</mn><mo>°</mo></mrow></mfrac><mi>π</mi><mi>r</mi></math></div>
+                    <div class="step-line"><span class="step-label">Área Sector</span> <math><msub><mi>A</mi><mi>sec</mi></msub><mo>=</mo><mfrac><mi>θ</mi><mrow><mn>360</mn><mo>°</mo></mrow></mfrac><mi>π</mi><msup><mi>r</mi><mn>2</mn></msup></math></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>2. Conversor de Ángulos (Procedimental)</h2>
+                
+                <div class="form-group">
+                    <label>De Grados a Radianes:</label>
+                    <div class="input-row" style="margin-bottom: 10px;">
+                        <input type="number" id="inpDeg" value="150" min="1" max="360" placeholder="Grados (°)">
+                    </div>
+                    <div id="resDegToRad" class="procedimiento-box conversor"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label>De Radianes a Grados (Fracción de π):</label>
+                    <div class="input-row" style="margin-bottom: 10px;">
+                        <input type="number" id="inpRadNum" value="5" placeholder="Num">
+                        <span style="font-size: 1.5rem; font-weight: bold;">/</span>
+                        <input type="number" id="inpRadDen" value="6" placeholder="Den">
+                        <span style="font-size: 1.5rem; font-family: 'Times New Roman', serif;">π</span>
+                    </div>
+                    <div id="resRadToDeg" class="procedimiento-box conversor"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUMNA DERECHA: LABORATORIO Y CÁLCULOS -->
+        <div class="column">
+            
+            <div class="card" style="border: 2px solid var(--secondary);">
+                <h2>3. Simulador Geométrico Visual</h2>
+                
+                <div class="input-row" style="margin-bottom: 20px;">
+                    <div class="form-group" style="margin:0;">
+                        <label style="color: var(--primary-dark);">Radio (r):</label>
+                        <div class="input-row">
+                            <input type="range" id="slRadio" min="1" max="20" step="1" value="12">
+                            <input type="number" id="numRadio" value="12" min="1" max="20" style="width: 70px;">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin:0;">
+                        <label style="color: var(--warning);">Ángulo (θ°):</label>
+                        <div class="input-row">
+                            <input type="range" id="slAngulo" min="1" max="360" step="1" value="45">
+                            <input type="number" id="numAngulo" value="45" min="1" max="360" style="width: 70px;">
+                        </div>
+                    </div>
+                </div>
+
+                <canvas id="canvasCirc" width="450" height="450"></canvas>
+                
+                <h3 style="border-bottom: 2px solid var(--border); padding-bottom: 5px;">Procedimiento: Arco y Sector</h3>
+                <div id="resDirecto">
+                    <!-- JS inyecta el paso a paso aquí -->
+                </div>
+            </div>
+
+            <div class="card" style="border-top: 4px solid var(--purple);">
+                <h2 style="color: var(--purple);">4. Cálculos Inversos (Despeje del Radio)</h2>
+                <p style="font-size: 0.9em; margin-bottom: 15px;">Ingresa el coeficiente de π (Ej: para un área de 36π, ingresa 36).</p>
+                
+                <div class="form-group">
+                    <select id="selInverso" style="border-color: var(--purple); font-weight: bold;">
+                        <option value="area">Dada el Área (A) &rarr; Despejar Radio y Circunferencia</option>
+                        <option value="circ">Dada la Circunferencia (C) &rarr; Despejar Radio y Área</option>
+                        <option value="arco">Dado el Arco (s) y Ángulo &rarr; Despejar Radio</option>
+                        <option value="sector">Dado Sector (A_sec) y Ángulo &rarr; Despejar Radio</option>
+                    </select>
+                </div>
+                
+                <div id="divInversoInputs" class="input-row form-group">
+                    <!-- Dinámico -->
+                </div>
+
+                <div id="resInverso" class="procedimiento-box inverse">
+                    <!-- JS inyecta el paso a paso aquí -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    /* =========================================
+       MOTOR MATEMÁTICO: MathML Nativo
+       ========================================= */
+    
+    function gcd(a, b) {
+        a = Math.abs(a); b = Math.abs(b);
+        return b === 0 ? a : gcd(b, a % b);
+    }
+
+    // Retorna MathML para Fracciones con Pi
+    function getMathML_PiFrac(num, den) {
+        if (num === 0) return "<math><mn>0</mn></math>";
+        let g = gcd(num, den);
+        let n = num / g;
+        let d = den / g;
+
+        let nStr = "";
+        if (n === 1) nStr = "<mi>π</mi>";
+        else if (n === -1) nStr = "<mrow><mo>-</mo><mi>π</mi></mrow>";
+        else nStr = `<mrow><mn>${n}</mn><mi>π</mi></mrow>`;
+
+        if (d === 1) return `<math>${nStr}</math>`;
+        return `<math><mfrac><mrow>${nStr}</mrow><mn>${d}</mn></mfrac></math>`;
+    }
+
+    // Retorna MathML para Fracciones SIN Pi
+    function getMathML_Frac(num, den) {
+        if (num === 0) return "<math><mn>0</mn></math>";
+        let g = gcd(num, den);
+        let n = num / g;
+        let d = den / g;
+        if (d === 1) return `<math><mn>${n}</mn></math>`;
+        return `<math><mfrac><mn>${n}</mn><mn>${d}</mn></mfrac></math>`;
+    }
+
+    // Lógica para raíces exactas
+    function simplifySqrtObj(val) {
+        if (val === 0) return { out: 0, in: 1 };
+        let outside = 1;
+        let inside = val;
+        for (let i = 2; i * i <= inside; i++) {
+            while (inside % (i * i) === 0) {
+                outside *= i;
+                inside /= (i * i);
+            }
+        }
+        return { out: outside, in: inside };
+    }
+
+    function getMathML_Sqrt(val) {
+        if (val < 0) return "<math><mtext>No real</mtext></math>";
+        if (val === 0) return "<math><mn>0</mn></math>";
+        let s = Math.round(Math.sqrt(val));
+        if (s * s === val) return `<math><mn>${s}</mn></math>`; 
+
+        let obj = simplifySqrtObj(val);
+        if (obj.out === 1) return `<math><msqrt><mn>${obj.in}</mn></msqrt></math>`;
+        return `<math><mrow><mn>${obj.out}</mn><msqrt><mn>${obj.in}</mn></msqrt></mrow></math>`;
+    }
+
+    function getMathML_SqrtFrac(num, den) {
+        let g = gcd(num, den);
+        let n = num / g;
+        let d = den / g;
+        let nMath = getMathML_Sqrt(n).replace(/<\/?math>/g, '');
+        if (d === 1) return `<math>${nMath}</math>`;
+        let dMath = getMathML_Sqrt(d).replace(/<\/?math>/g, '');
+        return `<math><mfrac><mrow>${nMath}</mrow><mrow>${dMath}</mrow></mfrac></math>`;
+    }
+
+    /* =========================================
+       1. LABORATORIO Y CÁLCULOS DIRECTOS PASO A PASO
+       ========================================= */
+
+    const slRadio = document.getElementById('slRadio');
+    const numRadio = document.getElementById('numRadio');
+    const slAngulo = document.getElementById('slAngulo');
+    const numAngulo = document.getElementById('numAngulo');
+    const canvas = document.getElementById('canvasCirc');
+    const ctx = canvas.getContext('2d');
+    const resDirecto = document.getElementById('resDirecto');
+
+    function syncInputs(source, target) {
+        target.value = source.value;
+        updateLaboratorio();
+    }
+
+    slRadio.addEventListener('input', () => syncInputs(slRadio, numRadio));
+    numRadio.addEventListener('input', () => syncInputs(numRadio, slRadio));
+    slAngulo.addEventListener('input', () => syncInputs(slAngulo, numAngulo));
+    numAngulo.addEventListener('input', () => syncInputs(numAngulo, slAngulo));
+
+    function drawCirculo(r, angGrados) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let cx = canvas.width / 2;
+        let cy = canvas.height / 2;
+        
+	const radioMin = 70;   // tamaño mínimo visible
+	const radioMax = 180;  // tamaño máximo
+
+let pxR = radioMin + (r - 1) * (radioMax - radioMin) / (20 - 1);
+
+        ctx.beginPath();
+        ctx.strokeStyle = '#f1f5f9';
+        ctx.moveTo(0, cy); ctx.lineTo(canvas.width, cy);
+        ctx.moveTo(cx, 0); ctx.lineTo(cx, canvas.height);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, pxR, 0, 2 * Math.PI);
+        ctx.strokeStyle = '#94a3b8';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        let rad = angGrados * Math.PI / 180;
+
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, pxR, 0, -rad, true); 
+        ctx.lineTo(cx, cy);
+        ctx.fillStyle = 'rgba(2, 132, 199, 0.15)';
+        ctx.fill();
+        ctx.strokeStyle = '#0284c7';
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, pxR, 0, -rad, true);
+        ctx.strokeStyle = '#ea580c'; 
+        ctx.lineWidth = 5;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, 5, 0, 2*Math.PI);
+        ctx.fillStyle = '#1e40af';
+        ctx.fill();
+
+        ctx.font = "bold 15px sans-serif";
+        ctx.fillStyle = "#1e40af";
+        ctx.fillText(`r = ${r}`, cx + pxR/2 - 15, cy + 20);
+
+        if (angGrados > 0) {
+            ctx.beginPath();
+            ctx.arc(cx, cy, 30, 0, -rad, true);
+            ctx.strokeStyle = "#64748b";
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            
+            let textAng = -rad / 2;
+            ctx.fillStyle = "#ea580c";
+            ctx.fillText(`${angGrados}°`, cx + 38 * Math.cos(textAng) - 5, cy + 38 * Math.sin(textAng) + 5);
+        }
+    }
+
+    function updateLaboratorio() {
+        let r = parseInt(numRadio.value) || 0;
+        let ang = parseInt(numAngulo.value) || 0;
+
+        let html = `
+            <div class="procedimiento-box" style="border-left-color: var(--warning);">
+                <div class="step-line"><span class="step-label">Fórmula Arco</span> <math><mi>s</mi><mo>=</mo><mfrac><mi>θ</mi><mn>180</mn></mfrac><mi>π</mi><mi>r</mi></math></div>
+                <div class="step-line"><span class="step-label">Sustitución</span> <math><mi>s</mi><mo>=</mo><mfrac><mn>${ang}</mn><mn>180</mn></mfrac><mi>π</mi><mo>(</mo><mn>${r} u </mn><mo>)</mo></math></div>
+                <div class="step-line"><span class="step-label">Operación</span> <math><mi>s</mi><mo>=</mo><mfrac><mrow><mn>${ang}</mn><mo>×</mo><mn>${r}</mn></mrow><mn>180</mn></mfrac><mi>π u</mi></math></div>
+                <div class="step-line"><span class="step-label">Respuesta</span> <math><mi>s</mi><mo>=</mo>${getMathML_PiFrac(ang * r, 180).replace(/<\/?math>/g, '')}<mtext> u</mtext></math></div>
+            </div>
+
+            <div class="procedimiento-box" style="border-left-color: var(--secondary);">
+                <div class="step-line"><span class="step-label">Fórmula Sector</span> <math><msub><mi>A</mi><mi>sec</mi></msub><mo>=</mo><mfrac><mi>θ</mi><mn>360</mn></mfrac><mi>π</mi><msup><mi>r</mi><mn>2</mn></msup></math></div>
+                <div class="step-line"><span class="step-label">Sustitución</span> <math><msub><mi>A</mi><mi>sec</mi></msub><mo>=</mo><mfrac><mn>${ang}</mn><mn>360</mn></mfrac><mi>π</mi><msup><mrow><mo>(</mo><mn>${r} u</mn><mo>)</mo></mrow><mn>2</mn></msup></math></div>
+                <div class="step-line"><span class="step-label">Potencia</span> <math><msub><mi>A</mi><mi>sec</mi></msub><mo>=</mo><mfrac><mn>${ang}</mn><mn>360</mn></mfrac><mi>π</mi><mo>(</mo><mn>${r*r} u²</mn><mo>)</mo></math></div>
+                <div class="step-line"><span class="step-label">Respuesta</span> <math><msub><mi>A</mi><mi>sec</mi></msub><mo>=</mo>${getMathML_PiFrac(ang * r * r, 360).replace(/<\/?math>/g, '')}<mtext> u</mtext><msup><mi></mi><mn>2</mn></msup></math></div>
+            </div>
+        `;
+        resDirecto.innerHTML = html;
+        drawCirculo(r, ang);
+    }
+
+    /* =========================================
+       2. CONVERSIONES PASO A PASO
+       ========================================= */
+    const inpDeg = document.getElementById('inpDeg');
+    const resDegToRad = document.getElementById('resDegToRad');
+    const inpRadNum = document.getElementById('inpRadNum');
+    const inpRadDen = document.getElementById('inpRadDen');
+    const resRadToDeg = document.getElementById('resRadToDeg');
+
+    inpDeg.addEventListener('input', updateConversiones);
+    inpRadNum.addEventListener('input', updateConversiones);
+    inpRadDen.addEventListener('input', updateConversiones);
+
+    function updateConversiones() {
+        let g = parseInt(inpDeg.value) || 0;
+        resDegToRad.innerHTML = `
+            <div class="step-line"><span class="step-label">Fórmula</span> <math><mi>Rad</mi><mo>=</mo><mi>Grados</mi><mo>×</mo><mfrac><mi>π</mi><mrow><mn>180</mn><mo>°</mo></mrow></mfrac></math></div>
+            <div class="step-line"><span class="step-label">Sustitución</span> <math><mi>Rad</mi><mo>=</mo><mn>${g}</mn><mo>×</mo><mfrac><mi>π</mi><mn>180</mn></mfrac></math></div>
+            <div class="step-line"><span class="step-label">Respuesta</span> <math><mi>Rad</mi><mo>=</mo>${getMathML_PiFrac(g, 180).replace(/<\/?math>/g, '')}</math></div>
+        `;
+
+        let n = parseInt(inpRadNum.value) || 0;
+        let d = parseInt(inpRadDen.value) || 1; if(d === 0) d = 1;
+        let inputFrac = getMathML_PiFrac(n, d).replace(/<\/?math>/g, '');
+        
+        resRadToDeg.innerHTML = `
+            <div class="step-line"><span class="step-label">Fórmula</span> <math><mi>Grados</mi><mo>=</mo><mi>Rad</mi><mo>×</mo><mfrac><mrow><mn>180</mn><mo>°</mo></mrow><mi>π</mi></mfrac></math></div>
+            <div class="step-line"><span class="step-label">Sustitución</span> <math><mi>Grados</mi><mo>=</mo><mo>(</mo>${inputFrac}<mo>)</mo><mo>×</mo><mfrac><mn>180</mn><mi>π</mi></mfrac></math></div>
+            <div class="step-line"><span class="step-label">Cancelando π</span> <math><mi>Grados</mi><mo>=</mo><mfrac><mrow><mn>${n}</mn><mo>×</mo><mn>180</mn></mrow><mn>${d}</mn></mfrac></math></div>
+            <div class="step-line"><span class="step-label">Respuesta</span> <math><mi>Grados</mi><mo>=</mo>${getMathML_Frac(n * 180, d).replace(/<\/?math>/g, '')}<mo>°</mo></math></div>
+        `;
+    }
+
+    /* =========================================
+       3. CÁLCULOS INVERSOS PASO A PASO
+       ========================================= */
+    const selInverso = document.getElementById('selInverso');
+    const divInversoInputs = document.getElementById('divInversoInputs');
+    const resInverso = document.getElementById('resInverso');
+
+    selInverso.addEventListener('change', buildInversoInputs);
+
+    function buildInversoInputs() {
+        let val = selInverso.value;
+        if (val === 'area') {
+            divInversoInputs.innerHTML = `
+                <div><label>Dato del Área (A):</label>
+                <div style="display:flex;align-items:center;">
+                    <input type="number" id="invK" value="25">
+                    <span style="font-size:1.5rem; margin-left:8px; font-family:serif;">π</span>
+                </div></div>
+            `;
+        } else if (val === 'circ') {
+            divInversoInputs.innerHTML = `
+                <div><label>Dato de Circunferencia (C):</label>
+                <div style="display:flex;align-items:center;">
+                    <input type="number" id="invK" value="12">
+                    <span style="font-size:1.5rem; margin-left:8px; font-family:serif;">π</span>
+                </div></div>
+            `;
+        } else if (val === 'arco') {
+            divInversoInputs.innerHTML = `
+                <div><label>Dato del Arco (s):</label>
+                <div style="display:flex;align-items:center;">
+                    <input type="number" id="invK" value="4">
+                    <span style="font-size:1.5rem; margin-left:8px; font-family:serif;">π</span>
+                </div></div>
+                <div><label>Ángulo (&theta;&deg;):</label><input type="number" id="invAng" value="90"></div>
+            `;
+        } else if (val === 'sector') {
+            divInversoInputs.innerHTML = `
+                <div><label>Dato del Sector (A_sec):</label>
+                <div style="display:flex;align-items:center;">
+                    <input type="number" id="invK" value="10">
+                    <span style="font-size:1.5rem; margin-left:8px; font-family:serif;">π</span>
+                </div></div>
+                <div><label>Ángulo (&theta;&deg;):</label><input type="number" id="invAng" value="60"></div>
+            `;
+        }
+        
+        let inps = divInversoInputs.querySelectorAll('input');
+        inps.forEach(i => i.addEventListener('input', calculateInverso));
+        calculateInverso();
+    }
+
+    function calculateInverso() {
+        let val = selInverso.value;
+        let k = parseInt(document.getElementById('invK').value) || 0;
+        if (k <= 0) { resInverso.innerHTML = "Ingresa valores positivos."; return; }
+
+        let html = "";
+
+        if (val === 'area') {
+            let rMath = getMathML_Sqrt(k);
+            let sqObj = simplifySqrtObj(k);
+            let cCoef = sqObj.out * 2;
+            let cMath = (sqObj.in === 1) ? `<math><mn>${cCoef}</mn><mi>π</mi></math>` : `<math><mrow><mn>${cCoef}</mn><msqrt><mn>${sqObj.in}</mn></msqrt></mrow><mi>π</mi></math>`;
+
+            html += `<div class="step-line"><span class="step-label">Fórmula Área</span> <math><mi>A</mi><mo>=</mo><mi>π</mi><msup><mi>r</mi><mn>2</mn></msup></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Sustitución</span> <math><mn>${k}</mn><mi>πu²</mi><mo>=</mo><mi>π</mi><msup><mi>r</mi><mn>2</mn></msup></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Despeje de r</span> <math><msup><mi>r</mi><mn>2</mn></msup><mo>=</mo><mn>${k}u²</mn></math> &nbsp;&rarr;&nbsp; <math><mi>r</mi><mo>=</mo>${rMath.replace(/<\/?math>/g, '')}<mtext> u</mtext></math></div>`;
+            html += `<div class="step-line" style="border-top:1px dashed #e2e8f0; margin-top:10px; padding-top:10px;"><span class="step-label">Fórmula Circ.</span> <math><mi>C</mi><mo>=</mo><mn>2</mn><mi>π</mi><mi>r</mi></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Sustitución</span> <math><mi>C</mi><mo>=</mo><mn>2</mn><mi>π</mi><mo>(</mo>${rMath.replace(/<\/?math>/g, '')}<mo>)</mo><mtext> u</mtext></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Respuesta C</span> <math><mi>C</mi><mo>=</mo>${cMath.replace(/<\/?math>/g, '')}<mtext> u</mtext></math></div>`;
+        } 
+        else if (val === 'circ') {
+            let rMath = getMathML_Frac(k, 2);
+            let aMath = getMathML_PiFrac(k*k, 4);
+
+            html += `<div class="step-line"><span class="step-label">Fórmula Circ.</span> <math><mi>C</mi><mo>=</mo><mn>2</mn><mi>π</mi><mi>r</mi></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Sustitución</span> <math><mn>${k}</mn><mi>πu</mi><mo>=</mo><mn>2</mn><mi>π</mi><mi>r</mi></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Despeje de r</span> <math><mi>r</mi><mo>=</mo><mfrac><mn>${k}u</mn><mn>2</mn></mfrac></math> &nbsp;&rarr;&nbsp; <math><mi>r</mi><mo>=</mo>${rMath.replace(/<\/?math>/g, '')}<mtext> u</mtext></math></div>`;
+            html += `<div class="step-line" style="border-top:1px dashed #e2e8f0; margin-top:10px; padding-top:10px;"><span class="step-label">Fórmula Área</span> <math><mi>A</mi><mo>=</mo><mi>π</mi><msup><mi>r</mi><mn>2</mn></msup></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Sustitución</span> <math><mi>A</mi><mo>=</mo><mi>π</mi><msup><mrow><mo>(</mo>${rMath.replace(/<\/?math>/g, '')}<mtext> u</mtext><mo>)</mo></mrow><mn>2</mn></msup></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Respuesta A</span> <math><mi>A</mi><mo>=</mo>${aMath.replace(/<\/?math>/g, '')}<mtext> u</mtext><msup><mi></mi><mn>2</mn></msup></math></div>`;
+        }
+        else if (val === 'arco') {
+            let ang = parseInt(document.getElementById('invAng').value) || 0; if(ang <= 0) return;
+            let rMath = getMathML_Frac(k * 180, ang);
+
+            html += `<div class="step-line"><span class="step-label">Fórmula Arco</span> <math><mi>s</mi><mo>=</mo><mfrac><mi>θ</mi><mn>180</mn></mfrac><mi>π</mi><mi>r</mi></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Sustitución</span> <math><mn>${k}</mn><mi>πu</mi><mo>=</mo><mfrac><mn>${ang}</mn><mn>180</mn></mfrac><mi>π</mi><mi>r</mi></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Cancelando π</span> <math><mn>${k}u</mn><mo>=</mo><mfrac><mn>${ang}</mn><mn>180</mn></mfrac><mi>r</mi></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Despeje de r</span> <math><mi>r</mi><mo>=</mo><mfrac><mrow><mn>${k}u</mn><mo>×</mo><mn>180</mn></mrow><mn>${ang}</mn></mfrac></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Respuesta</span> <math><mi>r</mi><mo>=</mo>${rMath.replace(/<\/?math>/g, '')}<mtext> u</mtext></math></div>`;
+        }
+        else if (val === 'sector') {
+            let ang = parseInt(document.getElementById('invAng').value) || 0; if(ang <= 0) return;
+            let r2Math = getMathML_Frac(k * 360, ang);
+            let rMath = getMathML_SqrtFrac(k * 360, ang);
+
+            html += `<div class="step-line"><span class="step-label">Fórmula Sector</span> <math><msub><mi>A</mi><mi>sec</mi></msub><mo>=</mo><mfrac><mi>θ</mi><mn>360</mn></mfrac><mi>π</mi><msup><mi>r</mi><mn>2</mn></msup></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Sustitución</span> <math><mn>${k}</mn><mi>πu²</mi><mo>=</mo><mfrac><mn>${ang}</mn><mn>360</mn></mfrac><mi>π</mi><msup><mi>r</mi><mn>2</mn></msup></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Cancelando π</span> <math><mn>${k}u²</mn><mo>=</mo><mfrac><mn>${ang}</mn><mn>360</mn></mfrac><msup><mi>r</mi><mn>2</mn></msup></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Despeje de r²</span> <math><msup><mi>r</mi><mn>2</mn></msup><mo>=</mo><mfrac><mrow><mn>${k}u²</mn><mo>×</mo><mn>360</mn></mrow><mn>${ang}</mn></mfrac></math> &nbsp;&rarr;&nbsp; <math><msup><mi>r</mi><mn>2</mn></msup><mo>=</mo>${r2Math.replace(/<\/?math>/g, '')}<mtext> u</mtext><msup><mi></mi><mn>2</mn></msup></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Raíz Cuadrada</span> <math><mi>r</mi><mo>=</mo>${rMath.replace(/<\/?math>/g, '')}<mtext> u</mtext></math></div>`;
+        }
+
+        resInverso.innerHTML = html;
+    }
+
+    // Inicializar
+    updateLaboratorio();
+    updateConversiones();
+    buildInversoInputs();
+
+</script>
+
+</body>
+</html>
