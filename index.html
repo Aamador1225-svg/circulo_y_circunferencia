@@ -216,9 +216,9 @@
                     <div class="step-line"><span class="step-label" style="min-width: 150px;">Ángulo Inscrito</span> <math><mi>x°</mi><mo>=</mo><mfrac><mrow><mi>m</mi><mover><mi>AB</mi><mo>⏜</mo></mover></mrow><mn>2</mn></mfrac></math></div>
                     <div class="step-line"><span class="step-label" style="min-width: 150px;">Á. Semi-inscrito</span> <math><mi>x°</mi><mo>=</mo><mfrac><mrow><mi>m</mi><mover><mi>AB</mi><mo>⏜</mo></mover></mrow><mn>2</mn></mfrac></math></div>
                     <div class="step-line"><span class="step-label" style="min-width: 150px;">Ángulo Interior</span> <math><mn>x°</mn><mo>=</mo><mfrac><mrow><mi>m</mi><mover><mi>BD</mi><mo>⏜</mo></mover><mo>+</mo><mi>m</mi><mover><mi>AC</mi><mo>⏜</mo></mover></mrow><mn>2</mn></mfrac></math></div>
-                    <div class="step-line"><span class="step-label" style="min-width: 150px;">Á. Ext. (Dos Secantes)</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mi>m</mi><mover><mi>CB</mi><mo>⏜</mo></mover><mo>-</mo><mi>m</mi><mover><mi>DE</mi><mo>⏜</mo></mover></mrow><mn>2</mn></mfrac></math></div>
-                    <div class="step-line"><span class="step-label" style="min-width: 150px;">Á. Ext. (Secante y Tangente)</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mi>m</mi><mover><mi>BC</mi><mo>⏜</mo></mover><mo>-</mo><mi>m</mi><mover><mi>BD</mi><mo>⏜</mo></mover></mrow><mn>2</mn></mfrac></math></div>
-                    <div class="step-line"><span class="step-label" style="min-width: 150px;">Á. Ext. (Dos Tangentes)</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mi>m</mi><mover><mi>BCD</mi><mo>⏜</mo></mover><mo>-</mo><mi>m</mi><mover><mi>BD</mi><mo>⏜</mo></mover></mrow><mn>2</mn></mfrac></math></div>
+                    <div class="step-line"><span class="step-label" style="min-width: 150px;">Á. Ext. (Dos Secantes)</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mi>m</mi><mover><mi>CB</mi><mo>⏜</mo></mover><mo>—</mo><mi>m</mi><mover><mi>DE</mi><mo>⏜</mo></mover></mrow><mn>2</mn></mfrac></math></div>
+                    <div class="step-line"><span class="step-label" style="min-width: 150px;">Á. Ext. (Secante y Tangente)</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mi>m</mi><mover><mi>BC</mi><mo>⏜</mo></mover><mo>—</mo><mi>m</mi><mover><mi>BD</mi><mo>⏜</mo></mover></mrow><mn>2</mn></mfrac></math></div>
+                    <div class="step-line"><span class="step-label" style="min-width: 150px;">Á. Ext. (Dos Tangentes)</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mi>m</mi><mover><mi>BCD</mi><mo>⏜</mo></mover><mo>—</mo><mi>m</mi><mover><mi>BD</mi><mo>⏜</mo></mover></mrow><mn>2</mn></mfrac></math></div>
                 </div>
             </div>
 
@@ -373,7 +373,7 @@
         
         let nStr = "";
         if (n === 1) nStr = "<mi>π</mi>";
-        else if (n === -1) nStr = "<mrow><mo>-</mo><mi>π</mi></mrow>";
+        else if (n === -1) nStr = "<mrow><mo>—</mo><mi>π</mi></mrow>";
         else nStr = `<mrow><mn>${n}</mn><mi>π</mi></mrow>`;
         
         let res = d === 1 ? nStr : `<mfrac><mrow>${nStr}</mrow><mn>${d}</mn></mfrac>`;
@@ -966,20 +966,20 @@ function dibujarEtiquetaPastilla(texto, x, y, color) {
             html += `<div class="step-line"><span class="step-label">Sustitución</span> <math><mn>x°</mn><mo>=</mo><mfrac><mrow><mn>${a1}</mn><mo>°</mo><mo>+</mo><mn>${a2}</mn><mo>°</mo></mrow><mn>2</mn></mfrac></math></div>`;
             html += `<div class="step-line"><span class="step-label">Respuesta</span> <math><mn>x°</mn><mo>=</mo><mn>${(a1+a2)/2}</mn><mo>°</mo></math></div>`;
         } else if (type === 'externo_secantes') {
-            html += `<div class="step-line"><span class="step-label">Fórmula</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow>${mCB}<mo>-</mo>${mDE}</mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Variables</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mi>α°</mi><mo>-</mo><mi>β°</mi></mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Sustitución</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mn>${a1}</mn><mo>°</mo><mo>-</mo><mn>${a2}</mn><mo>°</mo></mrow><mn>2</mn></mfrac></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Fórmula</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow>${mCB}<mo>—</mo>${mDE}</mrow><mn>2</mn></mfrac></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Variables</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mi>α°</mi><mo>—</mo><mi>β°</mi></mrow><mn>2</mn></mfrac></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Sustitución</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mn>${a1}</mn><mo>°</mo><mo>—</mo><mn>${a2}</mn><mo>°</mo></mrow><mn>2</mn></mfrac></math></div>`;
             html += `<div class="step-line"><span class="step-label">Respuesta</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mn>${(a1-a2)/2}</mn><mo>°</mo></math></div>`;
         } else if (type === 'externo_secante_tangente') {
-            html += `<div class="step-line"><span class="step-label">Fórmula</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow>${mBC}<mo>-</mo>${mBD}</mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Variables</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mi>α°</mi><mo>-</mo><mi>β°</mi></mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Sustitución</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mn>${a1}</mn><mo>°</mo><mo>-</mo><mn>${a2}</mn><mo>°</mo></mrow><mn>2</mn></mfrac></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Fórmula</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow>${mBC}<mo>—</mo>${mBD}</mrow><mn>2</mn></mfrac></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Variables</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mi>α°</mi><mo>—</mo><mi>β°</mi></mrow><mn>2</mn></mfrac></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Sustitución</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mn>${a1}</mn><mo>°</mo><mo>—</mo><mn>${a2}</mn><mo>°</mo></mrow><mn>2</mn></mfrac></math></div>`;
             html += `<div class="step-line"><span class="step-label">Respuesta</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mn>${(a1-a2)/2}</mn><mo>°</mo></math></div>`;
         } else if (type === 'externo_tangentes') {
             let may = 360 - a1;
-            html += `<div class="step-line"><span class="step-label">Fórmula</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow>${mBCD}<mo>-</mo>${mBD}</mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Variables</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mi>α°</mi><mo>-</mo><mi>β°</mi></mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Sustitución</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mn>${may}</mn><mo>°</mo><mo>-</mo><mn>${a1}</mn><mo>°</mo></mrow><mn>2</mn></mfrac></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Fórmula</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow>${mBCD}<mo>—</mo>${mBD}</mrow><mn>2</mn></mfrac></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Variables</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mi>α°</mi><mo>—</mo><mi>β°</mi></mrow><mn>2</mn></mfrac></math></div>`;
+            html += `<div class="step-line"><span class="step-label">Sustitución</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mn>${may}</mn><mo>°</mo><mo>—</mo><mn>${a1}</mn><mo>°</mo></mrow><mn>2</mn></mfrac></math></div>`;
             html += `<div class="step-line"><span class="step-label">Respuesta</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mn>${(may-a1)/2}</mn><mo>°</mo></math></div>`;
         }
         resAngulos.innerHTML = html + `</div>`;
