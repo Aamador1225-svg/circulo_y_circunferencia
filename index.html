@@ -3,1028 +3,940 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laboratorio: Círculo y Circunferencia</title>
+    <title>Laboratorio de Círculo y Circunferencia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+<script type="module"> import 'https://unpkg.com/mathlive';</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/13.2.3/math.min.js"></script>
     <style>
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1e40af;
-            --secondary: #0ea5e9;
-            --bg: #f8fafc;
-            --surface: #ffffff;
-            --text: #334155;
-            --border: #e2e8f0;
-            --success: #16a34a;
-            --warning: #ea580c;
-            --purple: #7c3aed;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            padding: 20px;
-            line-height: 1.6;
-        }
-
-        .container { max-width: 1300px; margin: 0 auto; }
-
-        header {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-            color: white;
-            padding: 25px;
-            border-radius: 12px;
-            text-align: center;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .layout {
-            display: grid;
-            grid-template-columns: 4fr 6fr;
-            gap: 25px;
-            align-items: start;
-        }
-
-        @media (max-width: 1000px) {
-            .layout { grid-template-columns: 1fr; }
-        }
-
-        .card {
-            background: var(--surface);
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--border);
-            margin-bottom: 20px;
-        }
-
-        h2 { 
-            color: var(--primary-dark); 
-            margin-bottom: 15px; 
-            border-bottom: 2px solid var(--border); 
-            padding-bottom: 8px; 
-            font-size: 1.3rem;
-        }
-        
-        h3 { color: var(--secondary); margin-top: 15px; margin-bottom: 10px; font-size: 1.1rem; }
-
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-weight: bold; margin-bottom: 6px; color: var(--text); }
-        
-        input[type="number"], select {
-            width: 100%; padding: 10px 12px; border: 1px solid var(--border);
-            border-radius: 6px; font-size: 15px; outline: none; background: #fff;
-        }
-        input[type="number"]:focus, select:focus { border-color: var(--primary); }
-        input[type="range"] { width: 100%; margin-top: 10px; cursor: pointer; }
-
-        .input-row { display: flex; gap: 15px; align-items: center; }
-        .input-row > div { flex: 1; }
-
-        math {
-            font-family: 'Cambria Math', 'Latin Modern Math', serif;
-            font-size: 1.35em;
-        }
-
-        .procedimiento-box {
-            background: #f8fafc;
-            border: 1px solid var(--border);
-            border-left: 4px solid var(--secondary);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .procedimiento-box.inverse { border-left-color: var(--purple); }
-        .procedimiento-box.conversor { border-left-color: var(--success); }
-
-        .step-line {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px dashed #e2e8f0;
-        }
-        .step-line:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-        
-        .step-label {
-            font-size: 0.85em; font-weight: bold; color: #64748b; 
-            text-transform: uppercase; min-width: 120px;
-        }
-
-        canvas {
-            display: block; width: 100%; max-width: 450px; margin: 0 auto 20px auto;
-            background: #ffffff; border: 1px dashed var(--border); border-radius: 8px;
-        }
-
-        .theory-list { margin-left: 25px; margin-bottom: 15px; }
-        .theory-list li { margin-bottom: 8px; text-align: justify; }
-        .definition { background: #e0f2fe; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #bae6fd; font-size: 0.95rem; }
-        
-        .alert-note {
-            background: #fef9c3; border-left: 4px solid #eab308; padding: 10px 15px; 
-            font-size: 0.95em; color: #854d0e; margin-bottom: 15px; border-radius: 4px;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        canvas { touch-action: none; }
     </style>
 </head>
-<body>
+<body class="text-slate-800 antialiased">
 
-<div class="container">
-    <header>
-        <h1>Laboratorio: Círculo y Circunferencia</h1>
-        <p>Análisis Algebraico Paso a Paso, Geometría y Fórmulas Exactas</p>
-    </header>
+    <div class="max-w-6xl mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-slate-900 mb-3">Laboratorio de Círculo y Circunferencia</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Explora la geometría circular: teoría, simuladores dinámicos, conversiones y cálculo de propiedades geométricas y angulares.</p>
+        </header>
 
-    <div class="layout">
-        <!-- COLUMNA IZQUIERDA: TEORÍA Y CONVERSIONES -->
-        <div class="column">
-            <div class="card">
-                <h2>1. Teoría y Elementos Notables</h2>
-                <div class="definition">
-                    <p><strong>Circunferencia (C):</strong> Es el perímetro o contorno. Todos sus puntos equidistan del centro.</p>
-                    <p style="margin-top: 8px;"><strong>Círculo (A):</strong> Es la región plana interior delimitada por la circunferencia.</p>
-                </div>
-                
-                <ul class="theory-list">
-                    <li><strong>Radio (r):</strong> Distancia del centro al borde.</li>
-                    <li><strong>Diámetro (D):</strong> Cuerda mayor que pasa por el centro (D = 2r).</li>
-                    <li><strong>Arco (s):</strong> Segmento curvo de la circunferencia. Su longitud física depende del radio.</li>
-                    <li><strong>Sector Circular:</strong> Área delimitada por dos radios y un arco.</li>
-                </ul>
+        <!-- Navigation -->
+        <nav class="flex flex-wrap justify-center gap-2 mb-8 border-b border-slate-200 pb-1">
+            <button onclick="openTab('teoria')" id="btn-teoria" class="tab-btn px-5 py-2.5 rounded-t-lg font-semibold bg-indigo-600 text-white transition-colors">1. Teoría y Fórmulas</button>
+            <button onclick="openTab('convertidor')" id="btn-convertidor" class="tab-btn px-5 py-2.5 rounded-t-lg font-semibold bg-white text-slate-600 hover:bg-slate-100 transition-colors">2. Convertidor de Ángulos</button>
+            <button onclick="openTab('simulador')" id="btn-simulador" class="tab-btn px-5 py-2.5 rounded-t-lg font-semibold bg-white text-slate-600 hover:bg-slate-100 transition-colors">3. Simuladores Gráficos</button>
+            <button onclick="openTab('calculadoras')" id="btn-calculadoras" class="tab-btn px-5 py-2.5 rounded-t-lg font-semibold bg-white text-slate-600 hover:bg-slate-100 transition-colors">4. Calculadoras Especiales</button>
+        </nav>
 
-                <h3>Fórmulas Principales:</h3>
-                <div class="procedimiento-box" style="border-left-color: var(--primary);">
-                    <div class="step-line"><span class="step-label">Circunferencia</span> <math><mi>C</mi><mo>=</mo><mn>2</mn><mi>π</mi><mi>r</mi></math></div>
-                    <div class="step-line"><span class="step-label">Área Círculo</span> <math><mi>A</mi><mo>=</mo><mi>π</mi><msup><mi>r</mi><mn>2</mn></msup></math></div>
-                    <div class="step-line"><span class="step-label">Longitud de Arco</span> <math><mi>s</mi><mo>=</mo><mfrac><mi>θ</mi><mrow><mn>180</mn><mo>°</mo></mrow></mfrac><mi>π</mi><mi>r</mi></math></div>
-                    <div class="step-line"><span class="step-label">Área Sector</span> <math><msub><mi>A</mi><mi>sec</mi></msub><mo>=</mo><mfrac><mi>θ</mi><mrow><mn>360</mn><mo>°</mo></mrow></mfrac><mi>π</mi><msup><mi>r</mi><mn>2</mn></msup></math></div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h2>2. Conversor de Ángulos (Procedimental)</h2>
-                
-                <div class="form-group">
-                    <label>De Grados a Radianes:</label>
-                    <div class="input-row" style="margin-bottom: 10px;">
-                        <input type="number" id="inpDeg" value="150" min="1" max="360" placeholder="Grados (°)">
-                    </div>
-                    <div id="resDegToRad" class="procedimiento-box conversor"></div>
-                </div>
-                
-                <div class="form-group">
-                    <label>De Radianes a Grados (Fracción de π):</label>
-                    <div class="input-row" style="margin-bottom: 10px;">
-                        <input type="number" id="inpRadNum" value="5" placeholder="Num" style="flex:1;">
-                        <span style="font-size: 1.5rem; font-weight: bold;">/</span>
-                        <input type="number" id="inpRadDen" value="6" placeholder="Den" style="flex:1;">
-                        <math style="font-size: 1.5rem; margin-left: 5px;"><mi>π</mi></math>
-                    </div>
-                    <div id="resRadToDeg" class="procedimiento-box conversor"></div>
-                </div>
-            </div>
-
-            <div class="card" style="border-top: 4px solid var(--success);">
-                <h2 style="color: var(--success);">5. Medida de Ángulos en la Circunferencia</h2>
-                
-                <div class="definition" style="background: #f0fdf4; border-color: #bbf7d0;">
-                    <ul style="margin-left: 20px; color: var(--text);">
-                        <li style="margin-bottom: 6px;"><strong>Ángulo Central:</strong> Su vértice está en el centro. Su medida es igual a la del arco interceptado.</li>
-                        <li style="margin-bottom: 6px;"><strong>Ángulo Inscrito:</strong> Su vértice está sobre la circunferencia y sus lados son <strong>dos cuerdas</strong>. Su medida es la mitad del arco interceptado.</li>
-                        <li style="margin-bottom: 6px;"><strong>Ángulo Semi-inscrito:</strong> Formado por <strong>una cuerda y una recta tangente</strong> que se intersecan en el punto de tangencia sobre la circunferencia. Su medida es la mitad del arco.</li>
-                        <li style="margin-bottom: 6px;"><strong>Ángulo Interior:</strong> Un ángulo formado por <strong>dos secantes (o cuerdas)</strong> que se intersecan en el interior de la circunferencia. Está medido por la <em>mitad de la suma</em> de los arcos interceptados.</li>
-                        <li><strong>Ángulo Exterior:</strong> Un ángulo cuyo vértice está en el exterior de la circunferencia. Está medido por la <em>mitad de la diferencia</em> de los arcos intersecados. Puede estar formado por:
-                            <ul style="margin-top: 4px; margin-left: 20px; list-style-type: circle;">
-                                <li><strong>Dos secantes</strong> que se intersecan en el exterior.</li>
-                                <li><strong>Una tangente y una secante</strong> que se intersecan en el exterior.</li>
-                                <li><strong>Dos tangentes</strong> que se intersecan en el exterior.</li>
-                            </ul>
-                        </li>
+        <!-- TAB 1: Teoría y Fórmulas -->
+        <section id="teoria" class="tab-content active">
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Definiciones -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                    <h2 class="text-2xl font-bold text-indigo-700 mb-4 flex items-center gap-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        Definiciones Fundamentales
+                    </h2>
+                    <ul class="space-y-4 text-slate-700">
+                        <li><strong>Circunferencia:</strong> Es la línea curva cerrada y plana. Es el conjunto de todos los puntos que están a una distancia constante (radio) de un punto fijo llamado centro.</li>
+                        <li><strong>Círculo:</strong> Es la región plana interior, el área que está delimitada por la circunferencia.</li>
+                        <li><strong>Radio ($r$):</strong> Segmento de recta que une el centro con cualquier punto de la circunferencia.</li>
+                        <li><strong>Diámetro ($D$):</strong> Cuerda que pasa por el centro. Equivale a dos veces el radio ($D = 2r$).</li>
+                        <li><strong>Arco:</strong> Cualquier porción continua de la circunferencia.</li>
+                        <li><strong>Sector Circular:</strong> Porción del círculo limitada por dos radios y el arco comprendido entre ellos.</li>
                     </ul>
                 </div>
 
-                <div class="alert-note">
-                    <strong>⚠️ Aclaración Importante (Geometría):</strong><br>
-                    No confundas la <strong>Medida Angular de un Arco (<math display="inline"><mi>m</mi><mover><mi>AB</mi><mo>⏜</mo></mover></math>)</strong>, que se expresa en grados (°) basándose en su ángulo central, con la <strong>Longitud de Arco (<math display="inline"><mi>s</mi></math>)</strong>, que es una distancia física lineal (<math display="inline"><mi>u</mi></math>) que depende del tamaño del radio.
-                </div>
-
-                <div class="procedimiento-box" style="border-left-color: var(--success);">
-                    <div class="step-line"><span class="step-label" style="min-width: 150px;">Ángulo Central</span> <math><mi>x°</mi><mo>=</mo><mi>m</mi><mover><mi>AB</mi><mo>⏜</mo></mover></math></div>
-                    <div class="step-line"><span class="step-label" style="min-width: 150px;">Ángulo Inscrito</span> <math><mi>x°</mi><mo>=</mo><mfrac><mrow><mi>m</mi><mover><mi>AB</mi><mo>⏜</mo></mover></mrow><mn>2</mn></mfrac></math></div>
-                    <div class="step-line"><span class="step-label" style="min-width: 150px;">Á. Semi-inscrito</span> <math><mi>x°</mi><mo>=</mo><mfrac><mrow><mi>m</mi><mover><mi>AB</mi><mo>⏜</mo></mover></mrow><mn>2</mn></mfrac></math></div>
-                    <div class="step-line"><span class="step-label" style="min-width: 150px;">Ángulo Interior</span> <math><mn>x°</mn><mo>=</mo><mfrac><mrow><mi>m</mi><mover><mi>BD</mi><mo>⏜</mo></mover><mo>+</mo><mi>m</mi><mover><mi>AC</mi><mo>⏜</mo></mover></mrow><mn>2</mn></mfrac></math></div>
-                    <div class="step-line"><span class="step-label" style="min-width: 150px;">Á. Ext. (Dos Secantes)</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mi>m</mi><mover><mi>CB</mi><mo>⏜</mo></mover><mo>—</mo><mi>m</mi><mover><mi>DE</mi><mo>⏜</mo></mover></mrow><mn>2</mn></mfrac></math></div>
-                    <div class="step-line"><span class="step-label" style="min-width: 150px;">Á. Ext. (Secante y Tangente)</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mi>m</mi><mover><mi>BC</mi><mo>⏜</mo></mover><mo>—</mo><mi>m</mi><mover><mi>BD</mi><mo>⏜</mo></mover></mrow><mn>2</mn></mfrac></math></div>
-                    <div class="step-line"><span class="step-label" style="min-width: 150px;">Á. Ext. (Dos Tangentes)</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mi>m</mi><mover><mi>BCD</mi><mo>⏜</mo></mover><mo>—</mo><mi>m</mi><mover><mi>BD</mi><mo>⏜</mo></mover></mrow><mn>2</mn></mfrac></math></div>
-                </div>
-            </div>
-
-            <div class="card" style="border-top: 4px solid var(--warning);">
-                <h2 style="color: var(--warning);">7. Arcos y Sectores (Proporcionalidad)</h2>
-                <p style="margin-bottom: 10px;">Cálculo directo proporcional sin conocer el radio, utilizando el ángulo central y el área o circunferencia total.</p>
-                <div class="procedimiento-box" style="border-left-color: var(--warning);">
-                    <div class="step-line"><span class="step-label" style="min-width: 140px;">Longitud de Arco</span> <math><mi>s</mi><mo>=</mo><mi>C</mi><mo>×</mo><mfrac><mi>θ</mi><mrow><mn>360</mn><mo>°</mo></mrow></mfrac></math></div>
-                    <div class="step-line"><span class="step-label" style="min-width: 140px;">Área del Sector</span> <math><msub><mi>A</mi><mi>sec</mi></msub><mo>=</mo><mi>A</mi><mo>×</mo><mfrac><mi>θ</mi><mrow><mn>360</mn><mo>°</mo></mrow></mfrac></math></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- COLUMNA DERECHA: LABORATORIO Y CÁLCULOS -->
-        <div class="column">
-            
-            <div class="card" style="border: 2px solid var(--secondary);">
-                <h2>3. Simulador Geométrico Visual</h2>
-                
-                <div class="input-row" style="margin-bottom: 20px;">
-                    <div class="form-group" style="margin:0;">
-                        <label style="color: var(--primary-dark);">Radio (r):</label>
-                        <div class="input-row">
-                            <input type="range" id="slRadio" min="1" max="20" step="1" value="12">
-                            <input type="number" id="numRadio" value="12" min="1" max="20" style="width: 70px;">
+                <!-- Fórmulas -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                    <h2 class="text-2xl font-bold text-indigo-700 mb-4 flex items-center gap-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                        Fórmulas Base
+                    </h2>
+                    <div class="space-y-5 text-lg">
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                            <span class="block text-sm text-slate-500 font-semibold mb-1">Área del Círculo</span>
+                            <div id="f-area">$$A = \pi r^2$$</div>
                         </div>
-                    </div>
-                    <div class="form-group" style="margin:0;">
-                        <label style="color: var(--warning);">Ángulo Central (θ°):</label>
-                        <div class="input-row">
-                            <input type="range" id="slAngulo" min="1" max="360" step="1" value="45">
-                            <input type="number" id="numAngulo" value="45" min="1" max="360" style="width: 70px;">
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                            <span class="block text-sm text-slate-500 font-semibold mb-1">Perímetro (Circunferencia)</span>
+                            <div id="f-perim">$$C = 2\pi r \quad \text{o} \quad C = \pi D$$</div>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                            <span class="block text-sm text-slate-500 font-semibold mb-1">Longitud de Arco (con ángulo $\theta$ en grados)</span>
+                            <div id="f-arco">$$L = \frac{\theta \cdot \pi \cdot r}{180^\circ}$$</div>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                            <span class="block text-sm text-slate-500 font-semibold mb-1">Área del Sector Circular (con ángulo $\theta$ en grados)</span>
+                            <div id="f-sector">$$A_s = \frac{\theta \cdot \pi \cdot r^2}{360^\circ}$$</div>
                         </div>
                     </div>
                 </div>
-
-                <canvas id="canvasCirc" width="650" height="550"></canvas>
-                
-                <h3 style="border-bottom: 2px solid var(--border); padding-bottom: 5px;">Procedimiento: Arco y Sector</h3>
-                <div id="resDirecto"></div>
             </div>
+        </section>
 
-            <div class="card" style="border-top: 4px solid var(--purple);">
-                <h2 style="color: var(--purple);">4. Cálculos Inversos (Despeje del Radio)</h2>
-                <p style="font-size: 0.9em; margin-bottom: 15px;">Ingresa el coeficiente de <math display="inline"><mi>π</mi></math> (Ej: para un área de 36π, ingresa 36).</p>
-                
-                <div class="form-group">
-                    <select id="selInverso" style="border-color: var(--purple); font-weight: bold; color: var(--text);">
-                        <option value="area">Dada el Área (A) &rarr; Despejar Radio y Circunferencia</option>
-                        <option value="circ">Dada la Circunferencia (C) &rarr; Despejar Radio y Área</option>
-                        <option value="arco">Dado el Arco (s) y Ángulo &rarr; Despejar Radio</option>
-                        <option value="sector">Dado Sector (A_sec) y Ángulo &rarr; Despejar Radio</option>
-                    </select>
-                </div>
-                
-                <div id="divInversoInputs" class="input-row form-group"></div>
-                <div id="resInverso" class="procedimiento-box inverse"></div>
-            </div>
-
-            <div class="card" style="border: 2px solid var(--success);">
-                <h2 style="color: var(--success);">6. Simulador Visual de Ángulos</h2>
-                
-                <div class="form-group">
-                    <select id="selTipoAngulo" style="border-color: var(--success); font-weight: bold; color: var(--text);">
-                        <option value="central">Ángulo Central</option>
-                        <option value="inscrito">Ángulo Inscrito (Dos cuerdas)</option>
-                        <option value="semiinscrito">Ángulo Semi-inscrito (Cuerda y Tangente)</option>
-                        <option value="interior">Ángulo Interior (Dos cuerdas/secantes)</option>
-                        <option value="externo_secantes">Ángulo Externo (Dos Secantes)</option>
-                        <option value="externo_secante_tangente">Ángulo Externo (Secante y Tangente)</option>
-                        <option value="externo_tangentes">Ángulo Externo (Dos Tangentes)</option>
-                    </select>
-                </div>
-
-                <div class="input-row" style="margin-bottom: 20px;">
-                    <div class="form-group" style="margin:0; flex:1;">
-                        <label id="lblArco1" style="color: var(--warning);">Arco <math display="inline"><mi>m</mi><mover><mi>AB</mi><mo>⏜</mo></mover></math> (α°):</label>
-                        <div class="input-row">
-                            <input type="range" id="slArco1" min="1" max="180" step="1" value="180">
-                            <input type="number" id="numArco1" value="180" min="1" max="359" style="width: 70px;">
+        <!-- TAB 2: Convertidor -->
+        <section id="convertidor" class="tab-content">
+            <div class="bg-white rounded-xl shadow-sm p-8 border border-slate-100 max-w-4xl mx-auto">
+                <h2 class="text-2xl font-bold text-indigo-700 mb-6 text-center">Convertidor Algebraico de Ángulos</h2>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    
+                    <!-- Inputs -->
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Ángulo en Grados Sexagesimales ($^\circ$)</label>
+                            <input type="number" id="inp-deg" value="45" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all text-lg" placeholder="Ej: 90">
+                        </div>
+                        <div class="flex justify-center">
+                            <svg class="w-6 h-6 text-slate-400 rotate-90 md:rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Ángulo en Radianes (rad)</label>
+                            <math-field  id="inp-rad" class="w-full px-4 py-3 rounded-lg border border-slate-300 text-lg"  virtual-keyboard-mode="onfocus">\frac{\pi}{4}</math-field>
                         </div>
                     </div>
-                    <div class="form-group" id="grpArco2" style="margin:0; display:none; flex:1;">
-                        <label id="lblArco2" style="color: var(--secondary);">Arco Menor <math display="inline"><mi>m</mi><mover><mi>CD</mi><mo>⏜</mo></mover></math> (β°):</label>
-                        <div class="input-row">
-                            <input type="range" id="slArco2" min="1" max="179" step="1" value="40">
-                            <input type="number" id="numArco2" value="40" min="1" max="179" style="width: 70px;">
+
+                    <!-- Procedimiento -->
+                    <div class="bg-slate-800 rounded-xl p-6 text-white min-h-[300px] flex flex-col justify-center">
+                        <h3 class="text-slate-300 font-semibold mb-4 text-center">Procedimiento Paso a Paso</h3>
+                        <div id="conv-steps" class="text-lg text-center overflow-x-auto">
+                            <!-- Renderizado por JS -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: Simuladores -->
+        <section id="simulador" class="tab-content">
+            <div class="space-y-8">
+                
+                <!-- Simulador de Arco y Sector -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                    <h2 class="text-2xl font-bold text-indigo-700 mb-6 border-b pb-2">1. Simulador Dinámico de Sector Circular y Arco</h2>
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <canvas id="sectorCanvas" width="400" height="400" class="w-full max-w-[400px] mx-auto bg-slate-50 rounded-full shadow-inner border border-slate-200"></canvas>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="space-y-4 bg-slate-50 p-5 rounded-lg">
+                                <div>
+                                    <label class="flex justify-between text-sm font-bold text-slate-700 mb-2">
+                                        <span>Radio ($r$)</span>
+                                        <span id="val-r" class="text-indigo-600">5 cm</span>
+                                    </label>
+                                    <input type="range" id="slide-r" min="1" max="20" value="5" step="0.5" class="w-full accent-indigo-600">
+                                </div>
+                                <div>
+                                    <label class="flex justify-between text-sm font-bold text-slate-700 mb-2">
+                                        <span>Ángulo Central ($\theta$)</span>
+                                        <span id="val-theta" class="text-indigo-600">60°</span>
+                                    </label>
+                                    <input type="range" id="slide-theta" min="0" max="360" value="60" class="w-full accent-indigo-600">
+                                </div>
+                            </div>
+
+                            <div class="bg-indigo-50 rounded-lg p-5 border border-indigo-100">
+                                <h3 class="font-bold text-indigo-800 mb-3">Resultados Exactos (En función de $\pi$):</h3>
+                                <div id="res-sector" class="text-slate-800 space-y-3 overflow-x-auto">
+                                    <!-- Renderizado por JS -->
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <canvas id="canvasAngulos" width="450" height="300" style="background: #ffffff; border: 1px dashed var(--border); border-radius: 8px; display: block; margin: 0 auto 20px auto; max-width:100%;"></canvas>
-                
-                <h3 style="border-bottom: 2px solid var(--border); padding-bottom: 5px;">Procedimiento de Ángulo:</h3>
-                <div id="resAngulos"></div>
-            </div>
+                <!-- Simulador de Ángulos -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                    <h2 class="text-2xl font-bold text-indigo-700 mb-6 border-b pb-2">2. Teoremas de Ángulos en la Circunferencia</h2>
+                    <div class="grid md:grid-cols-2 gap-8 items-start">
+                        
+                        <div class="space-y-5">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-2">Selecciona el tipo de ángulo:</label>
+                                <select id="ang-type" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                                    <option value="central">Ángulo Central</option>
+                                    <option value="inscrito">Ángulo Inscrito</option>
+                                    <option value="semiinscrito">Ángulo Semi-inscrito</option>
+                                    <option value="interior">Ángulo Interior</option>
+                                    <option value="exterior">Ángulo Exterior (Dos Secantes)</option>
+                                    <option value="ext_sectan">Ángulo Exterior (Secante-Tangente)</option>
+                                    <option value="ext_tantan">Ángulo Exterior (Dos Tangentes)</option>
+                                </select>
+                            </div>
 
-            <div class="card" style="border-top: 4px solid var(--warning);">
-                <h2 style="color: var(--warning);">8. Calculadora Proporcional</h2>
-                <p style="font-size: 0.9em; margin-bottom: 15px;">Ingresa el valor total de la Circunferencia (C) o el Área (A) y el ángulo para encontrar la porción exacta sin usar el radio.</p>
-                
-                <div class="form-group">
-                    <select id="selProporcional" style="border-color: var(--warning); font-weight: bold; color: var(--text);">
-                        <option value="arco">Dada la Circunferencia (C) &rarr; Hallar Arco (s)</option>
-                        <option value="sector">Dado el Área Total (A) &rarr; Hallar Sector (A_sec)</option>
-                    </select>
-                </div>
+                            <div class="bg-slate-50 p-5 rounded-lg space-y-4" id="ang-inputs">
+                                <!-- Inputs dinámicos -->
+                            </div>
+                            
+                            <div class="bg-slate-800 p-5 rounded-lg text-white">
+                                <h3 class="text-sm font-semibold text-slate-400 mb-2">Cálculo del Teorema:</h3>
+                                <div id="ang-calc" class="text-lg overflow-x-auto">
+                                    <!-- Renderizado por JS -->
+                                </div>
+                            </div>
+                        </div>
 
-                <div class="input-row" style="margin-bottom: 15px;">
-                    <div class="form-group" style="margin:0; flex:1;">
-                        <label id="lblPropData" style="color: var(--warning);">Circunferencia (C):</label>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <input type="number" id="inpPropK" value="24" min="1" style="width: 100px;">
-                            <math style="font-size: 1.5rem;"><mi>π</mi></math>
+                        <div class="flex justify-center items-center w-full">
+                            <!-- Contenedor de GeoGebra inyectado vía API -->
+                            <div id="ggb-element" class="w-full max-w-[500px] h-[400px] rounded-lg shadow-inner border border-slate-200 overflow-hidden"></div>
                         </div>
                     </div>
-                    <div class="form-group" style="margin:0; flex:1;">
-                        <label style="color: var(--warning);">Ángulo (θ°):</label>
-                        <input type="number" id="inpPropAng" value="45" min="1" max="360" style="width: 100px;">
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TAB 4: Calculadoras -->
+        <section id="calculadoras" class="tab-content">
+            <div class="grid md:grid-cols-2 gap-8">
+                
+                <!-- Cálculo Inverso -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                    <h2 class="text-xl font-bold text-indigo-700 mb-4 border-b pb-2">Calculadora Inversa (Encontrar Radio)</h2>
+                    <p class="text-sm text-slate-600 mb-4">Ingresa un valor conocido (como el área total o la longitud de un arco) para despejar el radio original $r$, dejando expresado $\pi$.</p>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-1">Conozco:</label>
+                            <select id="inv-type" class="w-full px-3 py-2 rounded-lg border border-slate-300">
+                                <option value="area">Área del Círculo Total</option>
+                                <option value="perim">Circunferencia (Perímetro Total)</option>
+                                <option value="arco">Longitud de Arco (requiere ángulo)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-1">Valor Conocido:</label>
+                            <input type="number" id="inv-val" value="25" step="0.1" class="w-full px-3 py-2 rounded-lg border border-slate-300">
+                        </div>
+
+                        <div id="inv-angle-container" class="hidden">
+                            <label class="block text-sm font-bold text-slate-700 mb-1">Ángulo Central ($\theta$ en grados):</label>
+                            <input type="number" id="inv-ang" value="90" step="1" class="w-full px-3 py-2 rounded-lg border border-slate-300">
+                        </div>
+
+                        <button onclick="calcInverse()" class="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg transition-colors">Despejar Radio ($r$)</button>
+
+                        <div class="mt-4 p-4 bg-slate-800 text-white rounded-lg min-h-[120px] overflow-x-auto flex flex-col justify-center">
+                            <div id="inv-result" class="text-center"><em>El procedimiento aparecerá aquí</em></div>
+                        </div>
                     </div>
                 </div>
-                
-                <div id="resProporcional" class="procedimiento-box" style="border-left-color: var(--warning);"></div>
-            </div>
 
-        </div>
+                <!-- Calculadora Proporcional -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                    <h2 class="text-xl font-bold text-indigo-700 mb-4 border-b pb-2">Calculadora Proporcional (Sin Radio)</h2>
+                    <p class="text-sm text-slate-600 mb-4">Calcula la longitud del arco o sector usando solo la proporcionalidad del ángulo $\theta$ sobre los $360^\circ$ y el total.</p>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-1">Ángulo del Arco/Sector ($\theta$):</label>
+                            <input type="number" id="prop-ang" value="72" step="1" class="w-full px-3 py-2 rounded-lg border border-slate-300">
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">Perímetro Total:</label>
+                                <input type="number" id="prop-perim" value="100" step="1" class="w-full px-3 py-2 rounded-lg border border-slate-300">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">Área Total:</label>
+                                <input type="number" id="prop-area" value="500" step="1" class="w-full px-3 py-2 rounded-lg border border-slate-300">
+                            </div>
+                        </div>
+
+                        <button onclick="calcProportional()" class="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg transition-colors">Calcular Proporciones</button>
+
+                        <div class="mt-4 p-4 bg-emerald-50 text-emerald-900 border border-emerald-200 rounded-lg min-h-[120px] overflow-x-auto flex flex-col justify-center">
+                            <div id="prop-result" class="text-center"><em>Los resultados aparecerán aquí</em></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
     </div>
-</div>
 
-<script>
-    /* =========================================
-       MOTOR MATEMÁTICO STRICTO MathML
-       ========================================= */
-    function gcd(a, b) {
-        a = Math.abs(a); b = Math.abs(b);
-        return b === 0 ? a : gcd(b, a % b);
-    }
-
-    function getUnitMathML(unit) {
-        if (!unit) return '';
-        if (unit === 'u²') return `<mtext>&nbsp;</mtext><msup><mi>u</mi><mn>2</mn></msup>`;
-        if (unit === 'u') return `<mtext>&nbsp;u</mtext>`;
-        if (unit === 'rad') return `<mtext>&nbsp;rad</mtext>`;
-        if (unit === '°') return `<mo>°</mo>`;
-        return `<mtext>&nbsp;${unit}</mtext>`;
-    }
-
-    function getMathML_PiFrac_Core(num, den, unit = "") {
-        if (num === 0) return `<mn>0</mn>${getUnitMathML(unit)}`;
-        let g = gcd(num, den);
-        let n = num / g; let d = den / g;
-        
-        let nStr = "";
-        if (n === 1) nStr = "<mi>π</mi>";
-        else if (n === -1) nStr = "<mrow><mo>—</mo><mi>π</mi></mrow>";
-        else nStr = `<mrow><mn>${n}</mn><mi>π</mi></mrow>`;
-        
-        let res = d === 1 ? nStr : `<mfrac><mrow>${nStr}</mrow><mn>${d}</mn></mfrac>`;
-        return res + getUnitMathML(unit);
-    }
-
-    function getMathML_Frac_Core(num, den, unit = "") {
-        if (num === 0) return `<mn>0</mn>${getUnitMathML(unit)}`;
-        let g = gcd(num, den);
-        let n = num / g; let d = den / g;
-        let res = d === 1 ? `<mn>${n}</mn>` : `<mfrac><mn>${n}</mn><mn>${d}</mn></mfrac>`;
-        return res + getUnitMathML(unit);
-    }
-
-    function simplifySqrtObj(val) {
-        if (val === 0) return { out: 0, in: 1 };
-        let outside = 1; let inside = val;
-        for (let i = 2; i * i <= inside; i++) {
-            while (inside % (i * i) === 0) { outside *= i; inside /= (i * i); }
-        }
-        return { out: outside, in: inside };
-    }
-
-    function getMathML_Sqrt_Core(val, unit = "") {
-        if (val < 0) return "<mtext>No real</mtext>";
-        if (val === 0) return `<mn>0</mn>${getUnitMathML(unit)}`;
-        let s = Math.round(Math.sqrt(val));
-        let res = "";
-        if (s * s === val) res = `<mn>${s}</mn>`; 
-        else {
-            let obj = simplifySqrtObj(val);
-            if (obj.out === 1) res = `<msqrt><mn>${obj.in}</mn></msqrt>`;
-            else res = `<mrow><mn>${obj.out}</mn><msqrt><mn>${obj.in}</mn></msqrt></mrow>`;
-        }
-        return res + getUnitMathML(unit);
-    }
-
-    function getMathML_SqrtFrac_Core(num, den, unit = "") {
-        let g = gcd(num, den);
-        let n = num / g; let d = den / g;
-        let nMath = getMathML_Sqrt_Core(n);
-        let dMath = getMathML_Sqrt_Core(d);
-        let res = d === 1 ? nMath : `<mfrac><mrow>${nMath}</mrow><mrow>${dMath}</mrow></mfrac>`;
-        return res + getUnitMathML(unit);
-    }
-
-    /* =========================================
-       1. LABORATORIO DIRECTO (Con Escala Dinámica)
-       ========================================= */
-    const slRadio = document.getElementById('slRadio');
-    const numRadio = document.getElementById('numRadio');
-    const slAngulo = document.getElementById('slAngulo');
-    const numAngulo = document.getElementById('numAngulo');
-    const canvas = document.getElementById('canvasCirc');
-    const ctx = canvas.getContext('2d');
-    const resDirecto = document.getElementById('resDirecto');
-
-    function syncInputs(source, target) { target.value = source.value; updateLaboratorio(); }
-    slRadio.addEventListener('input', () => syncInputs(slRadio, numRadio));
-    numRadio.addEventListener('input', () => syncInputs(numRadio, slRadio));
-    slAngulo.addEventListener('input', () => syncInputs(slAngulo, numAngulo));
-    numAngulo.addEventListener('input', () => syncInputs(numAngulo, slAngulo));
-
-    function drawCirculo(r, angGrados) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        let cx = canvas.width / 2; let cy = canvas.height / 2;
-        let pxR = 90 + ((Math.min(20, Math.max(1, r)) - 1) / 19) * 150; 
-
-        ctx.beginPath(); ctx.strokeStyle = '#f1f5f9';
-        ctx.moveTo(0, cy); ctx.lineTo(canvas.width, cy);
-        ctx.moveTo(cx, 0); ctx.lineTo(cx, canvas.height); ctx.stroke();
-
-        ctx.beginPath(); ctx.arc(cx, cy, pxR, 0, 2 * Math.PI);
-        ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2; ctx.stroke();
-
-        let rad = angGrados * Math.PI / 180;
-
-        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, pxR, 0, -rad, true); 
-        ctx.lineTo(cx, cy); ctx.fillStyle = 'rgba(2, 132, 199, 0.15)'; ctx.fill();
-        ctx.strokeStyle = '#0284c7'; ctx.stroke();
-
-        ctx.beginPath(); ctx.arc(cx, cy, pxR, 0, -rad, true);
-        ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 5; ctx.stroke();
-
-        ctx.beginPath(); ctx.arc(cx, cy, 4, 0, 2*Math.PI);
-        ctx.fillStyle = '#1e40af'; ctx.fill();
-
-        ctx.font = "bold 15px sans-serif"; ctx.fillStyle = "#1e40af";
-        ctx.textAlign = "center"; ctx.textBaseline = "middle";
-        ctx.fillText(`r = ${r}`, cx + pxR/2, cy + 15);
-
-        if (angGrados > 0) {
-            let arcVisual = Math.min(pxR - 10, 30);
-            ctx.beginPath(); ctx.arc(cx, cy, arcVisual, 0, -rad, true);
-            ctx.strokeStyle = "#64748b"; ctx.lineWidth = 1; ctx.stroke();
-            
-            let textAng = -rad / 2; ctx.fillStyle = "#ea580c";
-            ctx.fillText(`${angGrados}°`, cx + (arcVisual + 15) * Math.cos(textAng), cy + (arcVisual + 15) * Math.sin(textAng));
-        }
-    }
-
-    function updateLaboratorio() {
-        let r = parseInt(numRadio.value) || 0;
-        let ang = parseInt(numAngulo.value) || 0;
-
-        let html = `
-            <div class="procedimiento-box" style="border-left-color: var(--warning);">
-                <div class="step-line"><span class="step-label">Fórmula Arco</span> <math><mi>s</mi><mo>=</mo><mfrac><mi>θ</mi><mn>180</mn></mfrac><mi>π</mi><mi>r</mi></math></div>
-                <div class="step-line"><span class="step-label">Sustitución</span> <math><mi>s</mi><mo>=</mo><mfrac><mn>${ang}</mn><mn>180</mn></mfrac><mi>π</mi><mo>(</mo><mn>${r}</mn><mtext>&nbsp;u</mtext><mo>)</mo></math></div>
-                <div class="step-line"><span class="step-label">Respuesta</span> <math><mi>s</mi><mo>=</mo>${getMathML_PiFrac_Core(ang * r, 180, 'u')}</math></div>
-            </div>
-            <div class="procedimiento-box" style="border-left-color: var(--secondary);">
-                <div class="step-line"><span class="step-label">Fórmula Sector</span> <math><msub><mi>A</mi><mi>sec</mi></msub><mo>=</mo><mfrac><mi>θ</mi><mn>360</mn></mfrac><mi>π</mi><msup><mi>r</mi><mn>2</mn></msup></math></div>
-                <div class="step-line"><span class="step-label">Sustitución</span> <math><msub><mi>A</mi><mi>sec</mi></msub><mo>=</mo><mfrac><mn>${ang}</mn><mn>360</mn></mfrac><mi>π</mi><msup><mrow><mo>(</mo><mn>${r}</mn><mtext>&nbsp;u</mtext><mo>)</mo></mrow><mn>2</mn></msup></math></div>
-                <div class="step-line"><span class="step-label">Respuesta</span> <math><msub><mi>A</mi><mi>sec</mi></msub><mo>=</mo>${getMathML_PiFrac_Core(ang * r * r, 360, 'u²')}</math></div>
-            </div>`;
-        resDirecto.innerHTML = html; drawCirculo(r, ang);
-    }
-
-    /* =========================================
-       2. CONVERSIONES (Radianes y Grados)
-       ========================================= */
-    document.getElementById('inpDeg').addEventListener('input', updateConversiones);
-    document.getElementById('inpRadNum').addEventListener('input', updateConversiones);
-    document.getElementById('inpRadDen').addEventListener('input', updateConversiones);
-
-    function updateConversiones() {
-        let g = parseInt(document.getElementById('inpDeg').value) || 0;
-        document.getElementById('resDegToRad').innerHTML = `
-            <div class="step-line"><span class="step-label">Fórmula</span> <math><mi>Rad</mi><mo>=</mo><mi>Grados</mi><mo>×</mo><mfrac><mi>π</mi><mrow><mn>180</mn><mo>°</mo></mrow></mfrac></math></div>
-            <div class="step-line"><span class="step-label">Sustitución</span> <math><mi>Rad</mi><mo>=</mo><mn>${g}</mn><mo>°</mo><mo>×</mo><mfrac><mi>π</mi><mrow><mn>180</mn><mo>°</mo></mrow></mfrac></math></div>
-            <div class="step-line"><span class="step-label">Respuesta</span> <math><mi>Rad</mi><mo>=</mo>${getMathML_PiFrac_Core(g, 180, 'rad')}</math></div>`;
-
-        let n = parseInt(document.getElementById('inpRadNum').value) || 0;
-        let d = parseInt(document.getElementById('inpRadDen').value) || 1; if(d === 0) d = 1;
-        document.getElementById('resRadToDeg').innerHTML = `
-            <div class="step-line"><span class="step-label">Fórmula</span> <math><mi>Grados</mi><mo>=</mo><mi>Rad</mi><mo>×</mo><mfrac><mrow><mn>180</mn><mo>°</mo></mrow><mi>π</mi></mfrac></math></div>
-            <div class="step-line"><span class="step-label">Cancelando π</span> <math><mi>Grados</mi><mo>=</mo><mfrac><mrow><mn>${n}</mn><mo>×</mo><mn>180</mn><mo>°</mo></mrow><mn>${d}</mn></mfrac></math></div>
-            <div class="step-line"><span class="step-label">Respuesta</span> <math><mi>Grados</mi><mo>=</mo>${getMathML_Frac_Core(n * 180, d, '°')}</math></div>`;
-    }
-
-    /* =========================================
-       3. CÁLCULOS INVERSOS
-       ========================================= */
-    const selInverso = document.getElementById('selInverso');
-    const divInversoInputs = document.getElementById('divInversoInputs');
-    const resInverso = document.getElementById('resInverso');
-    selInverso.addEventListener('change', buildInversoInputs);
-
-    function buildInversoInputs() {
-        let val = selInverso.value;
-        if (val === 'area') {
-            divInversoInputs.innerHTML = `
-                <div style="flex: 1;"><label>Área (A):</label><div style="display: flex; align-items: center; gap: 10px;">
-                <input type="number" id="invK" value="25" style="width: 80px;"><math style="font-size:1.35em;"><mi>π</mi><mtext>&nbsp;</mtext><msup><mi>u</mi><mn>2</mn></msup></math></div></div>`;
-        } else if (val === 'circ') {
-            divInversoInputs.innerHTML = `
-                <div style="flex: 1;"><label>Circunferencia (C):</label><div style="display: flex; align-items: center; gap: 10px;">
-                <input type="number" id="invK" value="12" style="width: 80px;"><math style="font-size:1.35em;"><mi>π</mi><mtext>&nbsp;u</mtext></math></div></div>`;
-        } else if (val === 'arco') {
-            divInversoInputs.innerHTML = `
-                <div style="flex: 1;"><label>Arco (s):</label><div style="display: flex; align-items: center; gap: 10px;">
-                <input type="number" id="invK" value="4" style="width: 80px;"><math style="font-size:1.35em;"><mi>π</mi><mtext>&nbsp;u</mtext></math></div></div>
-                <div style="flex: 1;"><label>Ángulo (θ°):</label><input type="number" id="invAng" value="90"></div>`;
-        } else {
-            divInversoInputs.innerHTML = `
-                <div style="flex: 1;"><label>Sector (A_sec):</label><div style="display: flex; align-items: center; gap: 10px;">
-                <input type="number" id="invK" value="10" style="width: 80px;"><math style="font-size:1.35em;"><mi>π</mi><mtext>&nbsp;</mtext><msup><mi>u</mi><mn>2</mn></msup></math></div></div>
-                <div style="flex: 1;"><label>Ángulo (θ°):</label><input type="number" id="invAng" value="60"></div>`;
-        }
-        divInversoInputs.querySelectorAll('input').forEach(i => i.addEventListener('input', calculateInverso));
-        calculateInverso();
-    }
-
-    function calculateInverso() {
-        let val = selInverso.value; let k = parseInt(document.getElementById('invK').value) || 0;
-        if (k <= 0) { resInverso.innerHTML = "Ingresa valores positivos."; return; }
-        let html = "";
-
-        if (val === 'area') {
-            let rMath = getMathML_Sqrt_Core(k, 'u');
-            let sqObj = simplifySqrtObj(k); let cCoef = sqObj.out * 2;
-            let cMath = (sqObj.in === 1) ? `<mn>${cCoef}</mn><mi>π</mi><mtext>&nbsp;u</mtext>` : `<mrow><mn>${cCoef}</mn><msqrt><mn>${sqObj.in}</mn></msqrt></mrow><mi>π</mi><mtext>&nbsp;u</mtext>`;
-            html += `<div class="step-line"><span class="step-label">Sustitución (A)</span> <math><mn>${k}</mn><mi>π</mi><mtext>&nbsp;</mtext><msup><mi>u</mi><mn>2</mn></msup><mo>=</mo><mi>π</mi><msup><mi>r</mi><mn>2</mn></msup></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Despeje r</span> <math><mi>r</mi><mo>=</mo>${rMath}</math></div>`;
-            html += `<div class="step-line" style="border-top:1px dashed #e2e8f0;margin-top:10px;padding-top:10px;"><span class="step-label">Resp. Circunf.</span> <math><mi>C</mi><mo>=</mo><mn>2</mn><mi>π</mi><mi>r</mi><mo>=</mo>${cMath}</math></div>`;
-        } 
-        else if (val === 'circ') {
-            let rMath = getMathML_Frac_Core(k, 2, 'u');
-            let aMath = getMathML_PiFrac_Core(k*k, 4, 'u²');
-            html += `<div class="step-line"><span class="step-label">Sustitución (C)</span> <math><mn>${k}</mn><mi>π</mi><mtext>&nbsp;u</mtext><mo>=</mo><mn>2</mn><mi>π</mi><mi>r</mi></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Despeje r</span> <math><mi>r</mi><mo>=</mo>${rMath}</math></div>`;
-            html += `<div class="step-line" style="border-top:1px dashed #e2e8f0;margin-top:10px;padding-top:10px;"><span class="step-label">Resp. Área</span> <math><mi>A</mi><mo>=</mo><mi>π</mi><msup><mi>r</mi><mn>2</mn></msup><mo>=</mo>${aMath}</math></div>`;
-        }
-        else if (val === 'arco') {
-            let ang = parseInt(document.getElementById('invAng').value) || 0; if(ang <= 0) return;
-            html += `<div class="step-line"><span class="step-label">Sustitución (s)</span> <math><mn>${k}</mn><mi>π</mi><mtext>&nbsp;u</mtext><mo>=</mo><mfrac><mn>${ang}</mn><mn>180</mn></mfrac><mi>π</mi><mi>r</mi></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Despeje r</span> <math><mi>r</mi><mo>=</mo><mfrac><mrow><mn>${k}</mn><mo>×</mo><mn>180</mn></mrow><mn>${ang}</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Respuesta</span> <math><mi>r</mi><mo>=</mo>${getMathML_Frac_Core(k * 180, ang, 'u')}</math></div>`;
-        }
-        else if (val === 'sector') {
-            let ang = parseInt(document.getElementById('invAng').value) || 0; if(ang <= 0) return;
-            html += `<div class="step-line"><span class="step-label">Sustitución (Sec)</span> <math><mn>${k}</mn><mi>π</mi><mtext>&nbsp;</mtext><msup><mi>u</mi><mn>2</mn></msup><mo>=</mo><mfrac><mn>${ang}</mn><mn>360</mn></mfrac><mi>π</mi><msup><mi>r</mi><mn>2</mn></msup></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Despeje r²</span> <math><msup><mi>r</mi><mn>2</mn></msup><mo>=</mo>${getMathML_Frac_Core(k * 360, ang, '')}</math></div>`;
-            html += `<div class="step-line"><span class="step-label">Respuesta</span> <math><mi>r</mi><mo>=</mo>${getMathML_SqrtFrac_Core(k * 360, ang, 'u')}</math></div>`;
-        }
-        resInverso.innerHTML = html;
-    }
-
-    /* =========================================
-   4. SIMULADOR RIGUROSO DE ÁNGULOS EN LA CIRCUNFERENCIA
-   ========================================= */
-const selTipoAngulo = document.getElementById('selTipoAngulo');
-const grpArco2 = document.getElementById('grpArco2');
-const lblArco1 = document.getElementById('lblArco1');
-const lblArco2 = document.getElementById('lblArco2');
-const slArco1 = document.getElementById('slArco1');
-const numArco1 = document.getElementById('numArco1');
-const slArco2 = document.getElementById('slArco2');
-const numArco2 = document.getElementById('numArco2');
-const canvasAngulos = document.getElementById('canvasAngulos');
-const ctxA = canvasAngulos.getContext('2d');
-const resAngulos = document.getElementById('resAngulos');
-
-function syncAng(source, target) { target.value = source.value; updateSimuladorAngulos(); }
-slArco1.addEventListener('input', () => syncAng(slArco1, numArco1));
-numArco1.addEventListener('input', () => syncAng(numArco1, slArco1));
-slArco2.addEventListener('input', () => syncAng(slArco2, numArco2));
-numArco2.addEventListener('input', () => syncAng(numArco2, slArco2));
-
-selTipoAngulo.addEventListener('change', () => {
-    let type = selTipoAngulo.value;
-    
-    // Restauración global por defecto para evitar congelamientos o colores heredados
-    lblArco1.style.color = '#ea580c'; // Naranja original (Arco 1)
-    lblArco2.style.color = '#0ea5e9'; // Azul original (Arco 2)
-    grpArco2.style.display = 'block'; // Por defecto mostramos ambos deslizadores
-
-    if (type === 'interior') {
-        lblArco1.innerHTML = 'Arco <math display="inline"><mi>m</mi><mover><mi>BD</mi><mo>⏜</mo></mover></math> (α°):';
-        lblArco2.innerHTML = 'Arco <math display="inline"><mi>m</mi><mover><mi>AC</mi><mo>⏜</mo></mover></math> (β°):';
-        slArco1.max = 180; numArco1.max = 180;
-        
-    } else if (type === 'externo_secantes') {
-        lblArco1.innerHTML = 'Arco Mayor <math display="inline"><mi>m</mi><mover><mi>CB</mi><mo>⏜</mo></mover></math> (α°):';
-        lblArco2.innerHTML = 'Arco Menor <math display="inline"><mi>m</mi><mover><mi>DE</mi><mo>⏜</mo></mover></math> (β°):';
-        slArco1.max = 180; numArco1.max = 180;
-        
-    } else if (type === 'externo_secante_tangente') {
-        lblArco1.innerHTML = 'Arco Mayor <math display="inline"><mi>m</mi><mover><mi>BC</mi><mo>⏜</mo></mover></math> (α°):';
-        lblArco2.innerHTML = 'Arco Menor <math display="inline"><mi>m</mi><mover><mi>BD</mi><mo>⏜</mo></mover></math> (β°):';
-        slArco1.max = 180; numArco1.max = 180;
-        
-    } else if (type === 'externo_tangentes') {
-        // En dos tangentes el único deslizador en pantalla (slArco1) representará el arco menor β
-        lblArco1.innerHTML = 'Arco Menor <math display="inline"><mi>m</mi><mover><mi>BD</mi><mo>⏜</mo></mover></math> (β°):';
-        
-        // Cambiamos el color a azul para que coincida con el arco menor del canvas
-        lblArco1.style.color = '#0ea5e9'; 
-        
-        // Ocultamos únicamente el segundo bloque de controles
-        grpArco2.style.display = 'none';
-        
-        // Rango máximo seguro para las tangentes
-        slArco1.max = 120; numArco1.max = 120;
-
-            // Si el valor actual es mayor a 120, lo bajamos automáticamente para evitar desfases
-            if (parseInt(slArco1.value) > 120) {
-                slArco1.value = 120;
-                numArco1.value = 120;
-            } 
-        
-    } else {
-        // Caso por defecto (Ángulo central / inscrito)
-        lblArco1.innerHTML = 'Medida Arco <math display="inline"><mi>m</mi><mover><mi>AB</mi><mo>⏜</mo></mover></math> (α°):';
-        grpArco2.style.display = 'none';
-        slArco1.max = 359; numArco1.max = 359;
-    }
-    
-    // Ejecuta la actualización de forma inmediata para que no se quede pausado al cambiar de pestaña
-    updateSimuladorAngulos();
-});
-
-    function drawPoint(pt, label, align = 'center', base = 'middle', offX = 0, offY = 0) {
-        ctxA.beginPath(); ctxA.arc(pt.x, pt.y, 4, 0, 2*Math.PI);
-        ctxA.fillStyle = '#1e40af'; ctxA.fill();
-        ctxA.fillStyle = '#334155'; ctxA.font = 'bold 15px sans-serif';
-        ctxA.textAlign = align; ctxA.textBaseline = base;
-        ctxA.fillText(label, pt.x + offX, pt.y + offY);
-    }
-
-    function drawAngleSim(type, arc1, arc2) {
-        ctxA.clearRect(0, 0, canvasAngulos.width, canvasAngulos.height);
-        let cx = canvasAngulos.width / 2; let cy = canvasAngulos.height / 2;
-        let R = 100; let currentR = R;
-
-        // --- CAPPING VISUAL (Previene el colapso a infinito) ---
-        let vA1 = arc1; let vA2 = arc2 || 0;
-        if (type === 'externo_secantes' || type === 'externo_secante_tangente') {
-            if (vA1 - vA2 < 20) { let mid = (vA1 + vA2) / 2; vA1 = mid + 10; vA2 = mid - 10; }
-            if (vA1 > 170) { let diff = vA1 - vA2; vA1 = 170; vA2 = 170 - diff; }
-            if (vA2 < 10) { vA2 = 10; if (vA1 < 30) vA1 = 30; }
-        } else if (type === 'externo_tangentes') {
-            if (vA1 > 170) vA1 = 170;
-        }
-
-        const getP = (deg, radius = currentR) => ({ x: cx + radius * Math.cos(deg * Math.PI/180), y: cy - radius * Math.sin(deg * Math.PI/180) });
-        
-        const getIntersection = (A, B, C, D) => {
-            let numT = (A.x - C.x)*(C.y - D.y) - (A.y - C.y)*(C.x - D.x);
-            let den = (A.x - B.x)*(C.y - D.y) - (A.y - B.y)*(C.x - D.x);
-            if (Math.abs(den) < 0.001) return null;
-            let t = numT / den;
-            return { x: A.x + t*(B.x - A.x), y: A.y + t*(B.y - A.y) };
+    <script>
+        // --- CONFIGURACIÓN DE KATEX ---
+        const renderMathConfig = {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ],
+            throwOnError: false
         };
 
-        // Escalar dinámicamente si el punto P está muy lejos
-        let P_ext = null;
-        if (type === 'externo_secantes') {
-            let A = getP(vA1/2, R); let B = getP(360 - vA1/2, R);
-            let C = getP(vA2/2, R); let D = getP(360 - vA2/2, R);
-            P_ext = getIntersection(A, C, B, D);
-        } else if (type === 'externo_secante_tangente') {
-            let T = getP(270, R);
-            let A = getP(270 + vA2, R); 
-            let B = getP(270 + vA1, R);
-            let t1 = {x: T.x - 100, y: T.y}; let t2 = {x: T.x + 100, y: T.y};
-            P_ext = getIntersection(A, B, t1, t2);
-        } else if (type === 'externo_tangentes') {
-            let A = getP(vA1/2, R); let B = getP(360 - vA1/2, R);
-            let tA = getP(vA1/2 + 90, R); let tB = getP(360 - vA1/2 - 90, R);
-            P_ext = getIntersection(A, tA, B, tB);
-        }
-
-        if (P_ext) {
-            let maxDist = canvasAngulos.width / 2 - 25;
-            let dist = Math.abs(P_ext.x - cx); 
-            if (type === 'externo_tangentes') {
-      				  currentR = 100; // Forzamos a que siempre mida 100px y no se encoja
-	    } else if (dist > maxDist) {
-       				 currentR = R * (maxDist / dist); // Los otros modos conservan su zoom dinámico original
- 		   };
-        }
-
-        // Dibujo base (Ejes y círculo)
-        ctxA.beginPath(); ctxA.strokeStyle = '#f1f5f9';
-        ctxA.moveTo(0, cy); ctxA.lineTo(canvasAngulos.width, cy);
-        ctxA.moveTo(cx, 0); ctxA.lineTo(cx, canvasAngulos.height); ctxA.stroke();
-        ctxA.beginPath(); ctxA.arc(cx, cy, currentR, 0, 2 * Math.PI);
-        ctxA.strokeStyle = '#94a3b8'; ctxA.lineWidth = 2; ctxA.stroke();
-
-        const drawLineExt = (p1, p2, color, ext1 = 0, ext2 = 0, arr1 = false, arr2 = false) => {
-            if(!p1 || !p2) return;
-            let dx = p2.x - p1.x; let dy = p2.y - p1.y;
-            let len = Math.hypot(dx, dy);
-            let ux = dx/len; let uy = dy/len;
-            
-            let sx = p1.x - ux*ext1; let sy = p1.y - uy*ext1;
-            let ex = p2.x + ux*ext2; let ey = p2.y + uy*ext2;
-            
-            ctxA.beginPath(); ctxA.moveTo(sx, sy); ctxA.lineTo(ex, ey);
-            ctxA.strokeStyle = color; ctxA.lineWidth = 2; ctxA.stroke();
-            
-            if(arr1) {
-                ctxA.beginPath(); ctxA.moveTo(sx, sy);
-                ctxA.lineTo(sx + ux*10 - uy*6, sy + uy*10 + ux*6);
-                ctxA.lineTo(sx + ux*10 + uy*6, sy + uy*10 - ux*6);
-                ctxA.fillStyle = color; ctxA.fill();
-            }
-            if(arr2) {
-                ctxA.beginPath(); ctxA.moveTo(ex, ey);
-                ctxA.lineTo(ex - ux*10 - uy*6, ey - uy*10 + ux*6);
-                ctxA.lineTo(ex - ux*10 + uy*6, ey - uy*10 - ux*6);
-                ctxA.fillStyle = color; ctxA.fill();
+        // --- UTILIDADES MATEMÁTICAS Y FRACCIONES ---
+        const renderMath = (id, tex) => {
+            const el = document.getElementById(id);
+            if(el) {
+                katex.render(tex, el, { throwOnError: false, displayMode: true });
             }
         };
 
-        // CÓDIGO CORREGIDO PARA LA POSICIÓN DEL TEXTO:
-	const drawMathArc = (degStart, degEnd, color, label, offset = -22, antihorario = true) => {
-	 let radS = -degStart * Math.PI/180; let radE = -degEnd * Math.PI/180;
-	 ctxA.beginPath(); ctxA.arc(cx, cy, currentR, radS, radE, antihorario); 
-	 ctxA.strokeStyle = color; ctxA.lineWidth = 5; ctxA.stroke();
- 
-	 // NUEVA LÓGICA: Calcula el punto medio real según la dirección del trazo
-	 let midDeg;
-	 if (antihorario) {
-	   // Camino largo/antihorario matemático (hacia la izquierda en tu Canvas)
-	   midDeg = (degStart + degEnd) / 2;
-	   if (degStart > degEnd) midDeg += 180; 
-	 } else {
-	   // Camino corto/horario matemático (hacia la derecha en tu Canvas)
-		   midDeg = (degStart + degEnd) / 2;
-		   if (degStart < degEnd) midDeg += 180;
- }
-
- 		// El resto del código de la función se mantiene igual para dibujar la pastilla de texto
-	 let tx = cx + (currentR + offset) * Math.cos(midDeg * Math.PI/180);
-	 let ty = cy - (currentR + offset) * Math.sin(midDeg * Math.PI/180);
- 
-	 let txt = label + "°";
-	 ctxA.font = "bold 13px sans-serif";
-	 let tw = ctxA.measureText(txt).width;
-	 ctxA.fillStyle = "rgba(255,255,255,0.85)"; 
-	 ctxA.fillRect(tx - tw/2 - 2, ty - 8, tw + 4, 16);
-	 ctxA.fillStyle = color; 
-	 ctxA.textAlign = "center"; ctxA.textBaseline = "middle";
-	 ctxA.fillText(txt, tx, ty);
+        const renderInlineMath = (tex) => {
+            return katex.renderToString(tex, { throwOnError: false, displayMode: false });
         };
 
-        // --- CONSTRUCCIÓN ANCLADA (Para asegurar que los puntos fijos resalten diametrales correctas) ---
-        if (type === 'central') {
-            let A = getP(0); let B = getP(vA1); let O = {x: cx, y: cy};
-            drawLineExt(O, A, '#1e40af', 0, 0, false, false); 
-            drawLineExt(O, B, '#1e40af', 0, 0, false, false);
-            drawMathArc(0, vA1, '#ea580c', arc1, -22);
-            drawPoint(A, 'A', 'left', 'middle', 8, 0); drawPoint(B, 'B', 'right', 'bottom', -8, -8);
-            drawPoint(O, 'O', 'right', 'top', -8, 8);
-            ctxA.fillStyle = '#1e40af'; ctxA.fillText("x", O.x + 18, O.y - 10);
+        function gcd(a, b) {
+            return b ? gcd(b, a % b) : a;
         }
-        else if (type === 'inscrito') {
-            let A = getP(0); let B = getP(vA1); let C = getP(180 + vA1/2); // C siempre opuesto
-            drawLineExt(C, A, '#1e40af', 0, 30, false, true); // Rayos secantes desde el vértice inscrito
-            drawLineExt(C, B, '#1e40af', 0, 30, false, true);
-            drawMathArc(0, vA1, '#ea580c', arc1, -22);
-            drawPoint(A, 'A', 'left', 'middle', 8, 0); drawPoint(B, 'B', 'right', 'bottom', -8, -8);
-            drawPoint(C, 'C', 'right', 'top', -8, 8);
-            ctxA.fillStyle = '#1e40af'; ctxA.fillText("x", C.x + 22, C.y);
-        }
-        else if (type === 'semiinscrito') {
-            let A = getP(270); let B = getP(270 + vA1); // Vértice anclado al fondo (270°)
-            drawLineExt(A, B, '#1e40af', 0, 30, false, true); // Recta secante (Cuerda prolongada)
-            drawLineExt({x: A.x - 50, y: A.y}, {x: A.x + 50, y: A.y}, '#1e40af', 40, 40, true, true); // Recta tangente
-            drawMathArc(270, 270 + vA1, '#ea580c', arc1, -22);
-            drawPoint(A, 'A', 'center', 'top', 0, 8); drawPoint(B, 'B', 'left', 'bottom', 8, -8);
-            ctxA.fillStyle = '#1e40af'; ctxA.fillText("x", A.x + 20, A.y - 12);
-        }
-        else if (type === 'interior') {
-            // Ajustado a nomenclatura del libro: Arcos BD y AC, ángulo en E.
-            let ptB = getP(vA1/2); let ptD = getP(360 - vA1/2); // Arco derecho BD
-            let ptA = getP(180 - vA2/2); let ptC = getP(180 + vA2/2); // Arco izquierdo AC
-            let E = getIntersection(ptA, ptD, ptB, ptC);
-            drawLineExt(ptA, ptD, '#1e40af', 40, 40, true, true); // Rectas infinitas cruzándose
-            drawLineExt(ptB, ptC, '#1e40af', 40, 40, true, true); 
-            drawMathArc(360 - vA1/2, vA1/2, '#ea580c', `α=${arc1}`, 25); // Arco BD hacia afuera
-            drawMathArc(180 - vA2/2, 180 + vA2/2, '#0ea5e9', `β=${arc2}`, 25); // Arco AC hacia afuera
-            drawPoint(ptA, 'A', 'right', 'bottom', -8, -8); drawPoint(ptB, 'B', 'left', 'bottom', 8, -8);
-            drawPoint(ptC, 'C', 'right', 'top', -8, 8); drawPoint(ptD, 'D', 'left', 'top', 8, 8);
-            if(E) { drawPoint(E, 'E', 'center', 'top', 0, -10); ctxA.fillStyle = '#1e40af'; ctxA.fillText("x", E.x + 15, E.y); }
-        }
-        else if (type === 'externo_secantes') {
-            // Ajustado a nomenclatura del libro: Vértice A en la izquierda, Arcos CB y DE a la derecha.
-            let ptC = getP(vA1/2); let ptB = getP(360 - vA1/2); // Arco mayor CB
-            let ptD = getP(vA2/2); let ptE = getP(360 - vA2/2); // Arco menor DE
-            let A_ext = getIntersection(ptC, ptD, ptB, ptE);
-            drawLineExt(A_ext, ptC, '#1e40af', 15, 40, false, true); // Secante superior
-            drawLineExt(A_ext, ptB, '#1e40af', 15, 40, false, true); // Secante inferior
-            drawMathArc(360 - vA1/2, vA1/2, '#ea580c', `α=${arc1}`, 25, false); // Arco mayor por fuera
-            drawMathArc(360 - vA2/2, vA2/2, '#0ea5e9', `β=${arc2}`, -22, true); // Arco menor por dentro
-            drawPoint(ptC, 'C', 'left', 'bottom', -5, -8); drawPoint(ptB, 'B', 'left', 'top', -5, 8);
-            drawPoint(ptD, 'D', 'right', 'bottom', 8, -5); drawPoint(ptE, 'E', 'right', 'top', 8, 5);
-            if(A_ext) { drawPoint(A_ext, 'A', 'right', 'middle', -12, 0); }
-        }
-        else if (type === 'externo_secante_tangente') {
-            // Vértice A, Tangente toca en B(abajo), Secante cruza D y C
-            let ptB = getP(270);
-            let ptD = getP(270 + vA2);
-            let ptC = getP(270 + vA1);
-            let t1 = {x: ptB.x - 100, y: ptB.y}; let t2 = {x: ptB.x + 100, y: ptB.y};
-            let A_ext = getIntersection(ptD, ptC, t1, t2);
-            drawLineExt(A_ext, ptC, '#1e40af', 15, 40, false, true); // Secante
-            drawLineExt(A_ext, ptB, '#1e40af', 15, 40, false, true); // Tangente
-            drawMathArc(270, 270 + vA1, '#ea580c', `α=${arc1}`, 25, false); // Mayor por fuera
-            drawMathArc(270, 270 + vA2, '#0ea5e9', `β=${arc2}`, -22, true); // Menor por dentro
-            drawPoint(ptB, 'B', 'center', 'top', 0, 8);
-            drawPoint(ptD, 'D', 'right', 'top', 8, 8); drawPoint(ptC, 'C', 'right', 'bottom', 8, -5);
-            if(A_ext) { drawPoint(A_ext, 'A', 'right', 'middle', -12, 0); }
-        }
-else if (type === 'externo_tangentes') {
-            // GeoGebra Style: D moves based on Central Angle, Tangents extend to A
-            let anguloSeguro = Math.min(vA1, 120); 
-            let arcoMenor = Math.round(anguloSeguro);
 
-            let angD = 180 + anguloSeguro/2; // Punto D (Arriba a la izquierda)
-            let angB = 180 - anguloSeguro/2; // Punto B (Abajo a la izquierda)
-            let ptD = getP(angD); 
-            let ptB = getP(angB);
+        // Genera una fracción exacta en términos de pi, ej: \frac{3\pi}{2}
+        function getExactPiFraction(num, den) {
+            // Manejo seguro para decimales multiplicando por 100
+            let nInt = Math.round(num * 100);
+            let dInt = Math.round(den * 100);
+            let d = gcd(Math.abs(nInt), Math.abs(dInt));
             
-            // Radios para mostrar el ángulo central explícito
-            ctxA.beginPath();
-            ctxA.moveTo(cx, cy); ctxA.lineTo(ptD.x, ptD.y);
-            ctxA.moveTo(cx, cy); ctxA.lineTo(ptB.x, ptB.y);
-            ctxA.strokeStyle = '#94a3b8'; // Gris
-            ctxA.setLineDash([5, 5]); ctxA.lineWidth = 2; ctxA.stroke(); 
-            ctxA.setLineDash([]); 
+            let n = nInt / d;
+            let d2 = dInt / d;
             
-            // Ángulo central sombreado en el centro O
-            ctxA.beginPath(); ctxA.moveTo(cx, cy);
-            ctxA.arc(cx, cy, 30, angB * Math.PI/180, angD * Math.PI/180);
-            ctxA.fillStyle = 'rgba(14, 165, 233, 0.2)'; ctxA.fill();
-            
-            // Cálculo trigonométrico exacto del Vértice A con RADIO FIJO (100)
-            let distInterseccion = 100 / Math.cos((anguloSeguro / 2) * Math.PI / 180);
-            let A_ext = { x: cx - distInterseccion, y: cy };
-            
-            if(A_ext) {
-                // Dibujo de las rectas tangentes extendidas perfectas
-                drawLineExt(A_ext, ptD, '#1e40af', 15, 40, false, true); 
-                drawLineExt(A_ext, ptB, '#1e40af', 15, 40, false, true); 
-                
-                // Dibujo de Arcos usando el radio estable de 100
-                ctxA.beginPath();
-                ctxA.arc(cx, cy, 100, angB * Math.PI/180, angD * Math.PI/180, false);
-                ctxA.strokeStyle = '#0ea5e9'; ctxA.lineWidth = 5; ctxA.stroke();
+            if (n === 0) return '0';
+            if (n === 1 && d2 === 1) return '\\pi';
+            if (n === -1 && d2 === 1) return '-\\pi';
+            if (n === 1) return `\\frac{\\pi}{${d2}}`;
+            if (n === -1) return `-\\frac{\\pi}{${d2}}`;
+            if (d2 === 1) return `${n}\\pi`;
+            return `\\frac{${n}\\pi}{${d2}}`;
+        }
 
-                ctxA.beginPath();
-                ctxA.arc(cx, cy, 100, angD * Math.PI/180, angB * Math.PI/180, false);
-                ctxA.strokeStyle = '#ea580c'; ctxA.lineWidth = 5; ctxA.stroke();
-                
-                // Pastillas de Texto Estables
-                dibujarEtiquetaPastilla(`β=${arcoMenor}°`, cx - 78, cy, '#0ea5e9');
-                dibujarEtiquetaPastilla(`α=${360 - arcoMenor}°`, cx + 125, cy, '#ea580c');
-                
-                // ETIQUETAS DE PUNTOS (PUNTO C ELIMINADO POR COMPLETO)
-                drawPoint(ptD, 'D', 'right', 'bottom', 5, -5); 
-                drawPoint(ptB, 'B', 'right', 'top', 5, 5);
-                drawPoint(A_ext, 'A', 'right', 'middle', -12, 0);
-                drawPoint({x: cx, y: cy}, 'O', 'left', 'bottom', 5, -5);
-   }       
+        // --- SISTEMA DE PESTAÑAS ---
+        function openTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('bg-indigo-600', 'text-white');
+                b.classList.add('bg-white', 'text-slate-600');
+            });
+            document.getElementById(tabId).classList.add('active');
+            
+            const btn = document.getElementById('btn-' + tabId);
+            btn.classList.remove('bg-white', 'text-slate-600');
+            btn.classList.add('bg-indigo-600', 'text-white');
+
+            if(tabId === 'simulador') { updateSector(); updateAngleSim(); }
+        }
+
+        // --- TAB 2: CONVERTIDOR DE ÁNGULOS ---
+        const inpDeg = document.getElementById('inp-deg');
+        const inpRad = document.getElementById('inp-rad');
+
+        function updateFromDeg() {
+
+    let deg = parseFloat(inpDeg.value) || 0;
+
+    let degInt = Math.round(deg);
+
+    let exactFraction = getExactPiFraction(degInt,180);
+
+    inpRad.setValue(exactFraction);
+
+    let stepTex = `
+        \\begin{aligned}
+        \\text{Rad} &= \\text{Grados}\\times\\frac{\\pi}{180^\\circ}\\\\[0.5em]
+        &= ${deg}^\\circ\\times\\frac{\\pi}{180^\\circ}\\\\[0.5em]
+        &= ${degInt===deg && exactFraction!==`\\frac{${deg}\\pi}{180}`
+            ? `\\frac{${deg}\\pi}{180}\\quad\\xrightarrow{\\text{Simplificando}}\\quad`
+            : ""}
+        \\mathbf{${exactFraction}\\text{ rad}}
+        \\end{aligned}
+    `;
+
+    renderMath("conv-steps",stepTex);
+
 }
 
-// FUNCIÓN AUXILIAR (Colócala al final de tu archivo o justo debajo del bloque si no existe)
-function dibujarEtiquetaPastilla(texto, x, y, color) {
-  ctxA.font = "bold 13px sans-serif";
-  let tw = ctxA.measureText(texto).width;
-  ctxA.fillStyle = "rgba(255,255,255,0.85)"; 
-  ctxA.fillRect(x - tw/2 - 2, y - 8, tw + 4, 16);
-  ctxA.fillStyle = color; 
-  ctxA.textAlign = "center"; 
-  ctxA.textBaseline = "middle";
-  ctxA.fillText(texto, x, y);
+function latexToMathJS(latex){
+
+    return latex
+
+        .replace(/\\pi/g,"pi")
+
+        .replace(/\\cdot/g,"*")
+
+        .replace(/\\frac{([^}]*)}{([^}]*)}/g,"($1)/($2)")
+
+        .replace(/[{}]/g,"");
+
+}        
+
+function obtenerFraccionPi(latex){
+
+    latex = latex.replace(/\s/g,'');
+
+    // π
+    if(latex === "\\pi"){
+        return {num:1, den:1};
+    }
+
+    // 2π, 3π, ...
+    let m = latex.match(/^(\d+)\\pi$/);
+    if(m){
+        return {num:parseInt(m[1]), den:1};
+    }
+
+    // π/7
+    m = latex.match(/^\\frac\{\\pi\}\{(\d+)\}$/);
+    if(m){
+        return {num:1, den:parseInt(m[1])};
+    }
+
+    // 3π/7
+    m = latex.match(/^\\frac\{(\d+)\\pi\}\{(\d+)\}$/);
+    if(m){
+        return {
+            num:parseInt(m[1]),
+            den:parseInt(m[2])
+        };
+    }
+
+    return null;
 }
 
+function updateFromRad() {
+
+    let latex = inpRad.getValue("latex");
+
+    let expr = latexToMathJS(latex);
+
+    let rad;
+
+    try{
+
+        rad = math.evaluate(expr);
+
+    }catch(e){
+
+        return;
+
     }
 
-    function updateSimuladorAngulos() {
-      		  let type = selTipoAngulo.value;
-        	let a1 = parseInt(numArco1.value) || 0;
-        	let a2 = parseInt(numArco2.value) || 0;
-        
-        	// CORRECCIÓN: Si es dos tangentes, limitamos a 120° máximos y fijamos el radio estable
-        	if (type === 'externo_tangentes') {
-            		if (a1 > 120) { 
-                		a1 = 120; 
-                		numArco1.value = 120; 
-                		slArco1.value = 120; 
-            		}
-            		slArco1.max = 120;
-            		numArco1.max = 120;
-            		currentR = 100; // Bloquea la circunferencia de fondo para que no cambie de tamaño
-        	}
-        
-        	if ((type === 'externo_secantes' || type === 'externo_secante_tangente') && a1 <= a2) { 
-            	a1 = a2 + 1; 
-            	numArco1.value = a1; 
-            	slArco1.value = a1; 
-	}
-        
-        drawAngleSim(type, a1, a2);
-        
-        let mAB = `<mrow><mi>m</mi><mover><mi>AB</mi><mo>⏜</mo></mover></mrow>`;
-        let mCB = `<mrow><mi>m</mi><mover><mi>CB</mi><mo>⏜</mo></mover></mrow>`;
-        let mDE = `<mrow><mi>m</mi><mover><mi>DE</mi><mo>⏜</mo></mover></mrow>`;
-        let mBC = `<mrow><mi>m</mi><mover><mi>BC</mi><mo>⏜</mo></mover></mrow>`;
-        let mBD = `<mrow><mi>m</mi><mover><mi>BD</mi><mo>⏜</mo></mover></mrow>`;
-        let mAC = `<mrow><mi>m</mi><mover><mi>AC</mi><mo>⏜</mo></mover></mrow>`;
-        let mBCD = `<mrow><mi>m</mi><mover><mi>BCD</mi><mo>⏜</mo></mover></mrow>`;
-        
-        let html = `<div class="procedimiento-box" style="border-left-color: var(--success);">`;
-        
-        if (type === 'central') {
-            html += `<div class="step-line"><span class="step-label">Fórmula</span> <math><mi>x°</mi><mo>=</mo>${mAB}</math></div>`;
-            html += `<div class="step-line"><span class="step-label">Respuesta</span> <math><mi>x°</mi><mo>=</mo><mn>${a1}</mn><mo>°</mo></math></div>`;
-        } else if (type === 'inscrito' || type === 'semiinscrito') {
-            html += `<div class="step-line"><span class="step-label">Fórmula</span> <math><mi>x°</mi><mo>=</mo><mfrac><mrow>${mAB}</mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Sustitución</span> <math><mi>x°</mi><mo>=</mo><mfrac><mrow><mn>${a1}</mn><mo>°</mo></mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Respuesta</span> <math><mi>x°</mi><mo>=</mo><mn>${a1/2}</mn><mo>°</mo></math></div>`;
-        } else if (type === 'interior') {
-            html += `<div class="step-line"><span class="step-label">Fórmula</span> <math><mn>x°</mn><mo>=</mo><mfrac><mrow>${mBD}<mo>+</mo>${mAC}</mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Variables</span> <math><mn>x°</mn><mo>=</mo><mfrac><mrow><mi>α°</mi><mo>+</mo><mi>β°</mi></mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Sustitución</span> <math><mn>x°</mn><mo>=</mo><mfrac><mrow><mn>${a1}</mn><mo>°</mo><mo>+</mo><mn>${a2}</mn><mo>°</mo></mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Respuesta</span> <math><mn>x°</mn><mo>=</mo><mn>${(a1+a2)/2}</mn><mo>°</mo></math></div>`;
-        } else if (type === 'externo_secantes') {
-            html += `<div class="step-line"><span class="step-label">Fórmula</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow>${mCB}<mo>—</mo>${mDE}</mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Variables</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mi>α°</mi><mo>—</mo><mi>β°</mi></mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Sustitución</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mn>${a1}</mn><mo>°</mo><mo>—</mo><mn>${a2}</mn><mo>°</mo></mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Respuesta</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mn>${(a1-a2)/2}</mn><mo>°</mo></math></div>`;
-        } else if (type === 'externo_secante_tangente') {
-            html += `<div class="step-line"><span class="step-label">Fórmula</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow>${mBC}<mo>—</mo>${mBD}</mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Variables</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mi>α°</mi><mo>—</mo><mi>β°</mi></mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Sustitución</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mn>${a1}</mn><mo>°</mo><mo>—</mo><mn>${a2}</mn><mo>°</mo></mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Respuesta</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mn>${(a1-a2)/2}</mn><mo>°</mo></math></div>`;
-        } else if (type === 'externo_tangentes') {
-            let may = 360 - a1;
-            html += `<div class="step-line"><span class="step-label">Fórmula</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow>${mBCD}<mo>—</mo>${mBD}</mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Variables</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mi>α°</mi><mo>—</mo><mi>β°</mi></mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Sustitución</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mfrac><mrow><mn>${may}</mn><mo>°</mo><mo>—</mo><mn>${a1}</mn><mo>°</mo></mrow><mn>2</mn></mfrac></math></div>`;
-            html += `<div class="step-line"><span class="step-label">Respuesta</span> <math><mi>m</mi><mo>∠</mo><mi>A</mi><mo>=</mo><mn>${(may-a1)/2}</mn><mo>°</mo></math></div>`;
+    let deg = rad*180/Math.PI;
+    let frac = obtenerFraccionPi(latex);
+
+    inpDeg.value = deg.toFixed(2);
+
+    let stepTex = `
+\\begin{aligned}
+\\text{Grados}
+&= ${latex}\\times\\frac{180^\\circ}{\\pi}\\\\[0.5em]
+&= \\mathbf{${deg.toFixed(2)}^\\circ}
+\\end{aligned}
+`;
+
+if(frac){
+
+    stepTex += `
+    \\\\[1em]
+    \\begin{aligned}
+    \\text{Se simplifica }\\pi.\\\\[0.4em]
+    ${frac.num}\\times180 &= ${frac.num*180}\\\\[0.4em]
+    ${frac.num*180}\\div${frac.den} &= ${deg.toFixed(2)}
+    \\end{aligned}
+    `;
+}
+
+    renderMath("conv-steps",stepTex);
+
+}
+
+        inpDeg.addEventListener('input', updateFromDeg);
+        inpRad.addEventListener('input', updateFromRad);
+
+        // --- TAB 3: SIMULADOR DINÁMICO ARCO/SECTOR ---
+        const sCanvas = document.getElementById('sectorCanvas');
+        const sCtx = sCanvas.getContext('2d');
+        const sSlideR = document.getElementById('slide-r');
+        const sSlideT = document.getElementById('slide-theta');
+
+        function updateSector() {
+            let r = parseFloat(sSlideR.value);
+            let theta = parseFloat(sSlideT.value);
+            
+            document.getElementById('val-r').innerHTML = `$r = ${r}$ cm`;
+            document.getElementById('val-theta').innerHTML = `$\\theta = ${theta}^\\circ$`;
+            
+            // Re-render labels for inline math
+            renderMathInElement(document.getElementById('val-r'), renderMathConfig);
+            renderMathInElement(document.getElementById('val-theta'), renderMathConfig);
+
+            // Math Exacto con Pi
+            let lNum = theta * r;
+            let lDen = 180;
+            let aNum = theta * Math.pow(r, 2);
+            let aDen = 360;
+
+// Nuevos cálculos para el círculo completo (denominador 1)
+            let cNum = 2 * r;
+            let cDen = 1;
+            let acNum = Math.pow(r, 2);
+            let acDen = 1;
+
+            let exactL = getExactPiFraction(lNum, lDen);
+            let exactA = getExactPiFraction(aNum, aDen);
+	    let exactC = getExactPiFraction(cNum, cDen);
+            let exactAc = getExactPiFraction(acNum, acDen);
+
+
+            let resTex = `
+                \\begin{aligned}
+                \\text{Long. Arco (}L\\text{)} &= \\frac{${theta}^\\circ \\cdot \\pi \\cdot ${r}}{180^\\circ} = \\mathbf{${exactL} \\text{ cm}} \\\\[0.8em]
+                \\text{Área Sector (}A_s\\text{)} &= \\frac{${theta}^\\circ \\cdot \\pi \\cdot ${r}^2}{360^\\circ} = \\mathbf{${exactA} \\text{ cm}^2} \\\\[0.8em]
+                \\text{Circunferencia (}C\\text{)} &= 2 \\cdot \\pi \\cdot ${r} = \\mathbf{${exactC} \\text{ cm}} \\\\[0.8em]
+                \\text{Área Círculo (}A_c\\text{)} &= \\pi \\cdot ${r}^2 = \\mathbf{${exactAc} \\text{ cm}^2}
+                \\end{aligned}
+            `;
+            renderMath('res-sector', resTex);
+
+            // Draw Canvas
+            sCtx.clearRect(0, 0, sCanvas.width, sCanvas.height);
+            let cx = sCanvas.width / 2;
+            let cy = sCanvas.height / 2;
+            const minDraw = 40;
+	    const maxDraw = 200;
+	    let drawR = minDraw + ((r - 1) / 19) * (maxDraw - minDraw);
+            
+            // Draw full circle bg
+            sCtx.beginPath();
+            sCtx.arc(cx, cy, drawR, 0, 2 * Math.PI);
+            sCtx.fillStyle = '#f1f5f9'; // slate-100
+            sCtx.fill();
+            sCtx.strokeStyle = '#cbd5e1'; // slate-300
+            sCtx.lineWidth = 1;
+            sCtx.stroke();
+
+            // Draw Sector
+            let startAngle = -Math.PI / 2; // Start at 12 o'clock
+            let endAngle = startAngle + (theta * Math.PI / 180);
+            
+            sCtx.beginPath();
+            sCtx.moveTo(cx, cy);
+            sCtx.arc(cx, cy, drawR, startAngle, endAngle);
+            sCtx.lineTo(cx, cy);
+            sCtx.fillStyle = 'rgba(79, 70, 229, 0.2)'; // indigo-600 with opacity
+            sCtx.fill();
+
+            // Draw Arc Highlight
+            sCtx.beginPath();
+            sCtx.arc(cx, cy, drawR, startAngle, endAngle);
+            sCtx.strokeStyle = '#4f46e5'; // indigo-600
+            sCtx.lineWidth = 4;
+            sCtx.stroke();
+            
+            // Draw radii lines
+            sCtx.beginPath();
+            sCtx.moveTo(cx, cy);
+            sCtx.lineTo(cx + Math.cos(startAngle)*drawR, cy + Math.sin(startAngle)*drawR);
+            sCtx.moveTo(cx, cy);
+            sCtx.lineTo(cx + Math.cos(endAngle)*drawR, cy + Math.sin(endAngle)*drawR);
+            sCtx.strokeStyle = '#312e81';
+            sCtx.lineWidth = 2;
+            sCtx.stroke();
         }
-        resAngulos.innerHTML = html + `</div>`;
-    }
 
-    /* =========================================
-       5. CALCULADORA PROPORCIONAL
-       ========================================= */
-    const selProporcional = document.getElementById('selProporcional');
-    const inpPropK = document.getElementById('inpPropK');
-    const inpPropAng = document.getElementById('inpPropAng');
-    const resProporcional = document.getElementById('resProporcional');
+        sSlideR.addEventListener('input', updateSector);
+        sSlideT.addEventListener('input', updateSector);
 
-    selProporcional.addEventListener('change', () => {
-        document.getElementById('lblPropData').innerHTML = selProporcional.value === 'arco' 
-            ? 'Circunferencia (C): <math display="inline"><mtext>(en&nbsp;u)</mtext></math>' 
-            : 'Área Total (A): <math display="inline"><mtext>(en&nbsp;</mtext><msup><mi>u</mi><mn>2</mn></msup><mtext>)</mtext></math>';
-        updateProporcional();
-    });
+        // --- TAB 3: SIMULADOR DE ÁNGULOS (CONECTADO A GEOGEBRA) ---
+        const typeSelect = document.getElementById('ang-type');
+        const inputsContainer = document.getElementById('ang-inputs');
+        let ggbApp = null; // Guardará la instancia de GeoGebra
 
-    inpPropK.addEventListener('input', updateProporcional);
-    inpPropAng.addEventListener('input', updateProporcional);
+        // 1. DICCIONARIO DE VARIABLES GEOGEBRA
+        const geoConfig = {
+            central: {
+                mostrar: ['c', 'e', 'C', 'D', 'O', 's_1', 's_2', 'X_1', 'texto1'], 
+                ocultar: ['d', 'f', 'g', 'A', 'B', 'E', 'G', 'H', 'I', 'J', 'P', 's_3', 's_4', 's_5', 'L_1', 'L_2', 'L_3', 'L_4', 'L_5', 'X_2', 'X_3', 'X_4', 'X_5', 'X_6', 'X_7', 'texto2','texto3'], 
+                vars: ['b']
+            },
+            inscrito: {
+                mostrar: ['c', 'e', 'A', 'C', 'D', 'O', 's_3', 'L_1', 'X_2', 'texto1'],
+                ocultar: ['d', 'f', 'g', 'B', 'E', 'G', 'H', 'I', 'J', 'P', 's_1', 's_2', 's_4', 's_5', 'L_2', 'L_3', 'L_4', 'L_5', 'X_1', 'X_3', 'X_4', 'X_5', 'X_6', 'X_7', 'texto2','texto3'],
+                vars: ['b'] 
+            },
+            semiinscrito: {
+                mostrar: ['c', 'e', 'C', 'D', 'O', 's_4', 'L_3', 'X_3', 'texto1'],
+                ocultar: ['d', 'f', 'g', 'A', 'B', 'E', 'G', 'H', 'I', 'J', 'P', 's_1', 's_2', 's_3', 's_5', 'L_1', 'L_2', 'L_4', 'L_5', 'X_1', 'X_2', 'X_4', 'X_5', 'X_6', 'X_7', 'texto2', 'texto3'],
+                vars: ['b']
+            },
+            interior: {
+                mostrar: ['c', 'd', 'e', 'A', 'B', 'C', 'D', 'H', 'O', 's_3', 's_5', 'X_4', 'texto1', 'texto2'],
+                ocultar: ['f', 'g', 'E', 'G', 'I', 'J', 'P', 's_1', 's_2', 's_4', 'L_1', 'L_2', 'L_3', 'L_4', 'L_5', 'X_1', 'X_2', 'X_3', 'X_5', 'X_6', 'X_7', 'texto3'],
+                vars: ['a', 'b']
+            },
+            exterior: {
+                mostrar: ['c', 'd', 'e', 'A', 'B', 'C', 'D', 'E', 'O', 'L_1', 'L_2', 'X_5', 'texto1', 'texto2'],
+                ocultar: ['f', 'g', 'G', 'H', 'I', 'J', 'P', 's_1', 's_2', 's_3', 's_4', 's_5', 'L_3', 'L_4', 'L_5', 'X_1', 'X_2', 'X_3', 'X_4', 'X_6', 'X_7', 'texto3'],
+                vars: ['a', 'b'] 
+            },
+            ext_sectan: {
+                mostrar: ['c', 'e', 'f', 'C', 'D', 'I', 'O', 'P', 'L_3', 'L_5', 'X_6', 'texto1', 'texto2'],
+                ocultar: ['d', 'g', 'A', 'B', 'E', 'G', 'H', 'J', 's_1', 's_2', 's_3', 's_4', 's_5', 'L_1', 'L_2', 'L_4', 'X_1', 'X_2', 'X_3', 'X_4', 'X_5', 'X_7', 'texto3'],
+                vars: ['a', 'b']
+            },
+            ext_tantan: {
+                mostrar: ['c', 'e', 'g', 'C', 'D', 'J', 'O', 'L_3', 'L_4', 'X_7', 'texto1', 'texto3'],
+                ocultar: ['d', 'f', 'A', 'B', 'E', 'G', 'H', 'I', 'P', 's_1', 's_2', 's_3', 's_4', 's_5', 'L_1', 'L_2', 'L_5', 'X_1', 'X_2', 'X_3', 'X_4', 'X_5', 'X_6', 'texto2'],
+                vars: ['b'] 
+            }
+        };
 
-    function updateProporcional() {
-        let val = selProporcional.value;
-        let k = parseInt(inpPropK.value) || 0; let ang = parseInt(inpPropAng.value) || 0;
-        if(k <= 0 || ang <= 0) return;
+        // 2. INYECCIÓN DEL APPLET DE GEOGEBRA
+        const ggbParams = {
+            "material_id": "tfnkvxnm", // Tu ID de applet compartido
+            "width": 500,
+            "height": 400,
+            "showToolBar": false,
+            "showMenuBar": false,
+            "showAlgebraInput": false,
+            "enableRightClick": false,
+            "appletOnLoad": function(api) {
+                ggbApp = api;
+                console.log("GeoGebra conectado exitosamente");
+                ggbApp.registerUpdateListener(geoGebraListener); // Activar sincronización desde GeoGebra hacia HTML
+                updateGeoGebra(); // Forzar actualización visual inicial
+            }
+        };
 
-        let unitOut = val === 'arco' ? 'u' : 'u²';
-        let frac = getMathML_PiFrac_Core(k * ang, 360, unitOut);
+        // Cargar script de GeoGebra dinámicamente
+        const scriptGGB = document.createElement('script');
+        scriptGGB.src = "https://www.geogebra.org/apps/deployggb.js";
+        scriptGGB.onload = () => {
+            const applet = new GGBApplet(ggbParams, true);
+            applet.inject('ggb-element');
+        };
+        document.head.appendChild(scriptGGB);
+
+        const angDefs = {
+            central: { arcs: [{name: '$\\beta$ (Menor)', min: 10, max: 120, def: 90}], func: (b) => b, title: 'x = \\beta' },
+            inscrito: { arcs: [{name: '$\\beta$ (Menor)', min: 10, max: 120, def: 90}], func: (b) => b/2, title: 'x = \\frac{\\beta}{2}' },
+            semiinscrito: { arcs: [{name: '$\\beta$ (Menor)', min: 10, max: 120, def: 90}], func: (b) => b/2, title: 'x = \\frac{\\beta}{2}' },
+            interior: { arcs: [{name: '$\\alpha$ (Mayor)', min: 180, max: 220, def: 200}, {name: '$\\beta$ (Menor)', min: 10, max: 120, def: 90}], func: (a,b) => (a+b)/2, title: 'x = \\frac{\\alpha + \\beta}{2}' },
+            exterior: { arcs: [{name: '$\\alpha$ (Mayor)', min: 180, max: 220, def: 200}, {name: '$\\beta$ (Menor)', min: 10, max: 120, def: 90}], func: (a,b) => (a-b)/2, title: 'x = \\frac{\\alpha - \\beta}{2}' },
+            ext_sectan: { arcs: [{name: '$\\alpha$ (Mayor)', min: 180, max: 220, def: 200}, {name: '$\\beta$ (Menor)', min: 10, max: 120, def: 90}], func: (a,b) => (a-b)/2, title: 'x = \\frac{\\alpha - \\beta}{2}' },
+            ext_tantan: { arcs: [{name: '$\\beta$ (Menor)', min: 10, max: 160, def: 90}], func: (a,b) => (a-b)/2, title: 'x = \\frac{\\alpha - \\beta}{2}' }
+        };
+
+        function buildAngleInputs() {
+            let type = typeSelect.value;
+            let def = angDefs[type];
+            let html = '';
+            def.arcs.forEach((arcData, i) => {
+                html += `
+                    <div class="mb-2">
+                        <label class="flex justify-between text-sm font-bold text-slate-700 mb-2">
+                            <span>Medida Arco ${arcData.name}</span>
+                            <span id="val-ang-arc-${i}" class="text-indigo-600">${arcData.def}^\circ</span>
+                        </label>
+                        <input type="range" id="ang-arc-${i}" value="${arcData.def}" min="${arcData.min}" max="${arcData.max}" class="w-full accent-indigo-600" oninput="updateAngleSimFromHTML()">
+                    </div>
+                `;
+            });
+            inputsContainer.innerHTML = html;
+            
+            // Render Math inside the newly created inputs container
+            renderMathInElement(inputsContainer, renderMathConfig);
+            
+            // Reiniciar valores de arco α y β en GeoGebra
+            if (ggbApp) {
+                if (ggbApp.exists('a')) ggbApp.setValue('a', Math.PI);
+                if (ggbApp.exists('b')) ggbApp.setValue('b', Math.PI / 2);
+		        if (type !== 'ext_tantan' && ggbApp.exists('a')) ggbApp.setValue('a', 4*Math.PI/3);
+            }
+
+            updateAngleSimFromHTML();
+            updateGeoGebra(); // Forzar actualización visual al cambiar de ángulo
+            
+            // Forzar un encuadre inicial (con un ligero retraso para que GeoGebra termine de calcular coordenadas)
+            setTimeout(autoZoomGGB, 50);
+        }
+
+        // --- FUNCIONES DE SINCRONIZACIÓN BIDIRECCIONAL ---
+
+        function geoGebraListener(objName) {
+            let type = typeSelect.value;
+            let conf = geoConfig[type];
+            let didUpdate = false;
+
+            if (conf.vars[0] === objName) {
+                let el = document.getElementById('ang-arc-0');
+                if (el) {
+                    let val = Math.round(ggbApp.getValue(objName)* 180 / Math.PI);
+                    el.value = val;
+                    didUpdate = true;
+                }
+            }
+            if (conf.vars[1] && conf.vars[1] === objName) {
+                let el = document.getElementById('ang-arc-1');
+                if (el) {
+                    let val = Math.round(ggbApp.getValue(objName)* 180 / Math.PI);
+                    el.value = val;
+                    didUpdate = true;
+                }
+            }
+
+            if (didUpdate) updateAngleSim(true);
+        }
+
+        function updateAngleSimFromHTML() {
+            updateAngleSim(false);
+        }
+
+        function updateGeoGebra() {
+            if (!ggbApp) return;
+
+            let type = typeSelect.value;
+            let conf = geoConfig[type];
+
+            conf.ocultar.forEach(obj => {
+                if(ggbApp.exists(obj)) ggbApp.setVisible(obj, false);
+            });
+            conf.mostrar.forEach(obj => {
+                if(ggbApp.exists(obj)) ggbApp.setVisible(obj, true);
+            });
+
+            let a1 = parseFloat(document.getElementById('ang-arc-0')?.value) || 0;
+            let a2 = parseFloat(document.getElementById('ang-arc-1')?.value) || 0;
+
+	        const RAD = Math.PI / 180;
+            if(conf.vars[0] && ggbApp.exists(conf.vars[0])) ggbApp.setValue(conf.vars[0], a1*RAD);
+            if(conf.vars[1] && ggbApp.exists(conf.vars[1])) ggbApp.setValue(conf.vars[1], a2*RAD);
+        }
+
+        // NUEVA FUNCIÓN: Auto-Zoom Dinámico Inteligente
+        function autoZoomGGB() {
+            if (!ggbApp) return;
+
+            let type = typeSelect.value;
+            
+            // 1. Obtener el centro del círculo y calcular su radio real (usamos el punto C que pertenece a la circunferencia)
+            let ox = ggbApp.exists('O') ? ggbApp.getXcoord('O') : 0;
+            let oy = ggbApp.exists('O') ? ggbApp.getYcoord('O') : 0;
+            let r = 4; // Radio por defecto de seguridad
+            
+            if (ggbApp.exists('O') && ggbApp.exists('C')) {
+                let cx = ggbApp.getXcoord('C');
+                let cy = ggbApp.getYcoord('C');
+                r = Math.sqrt(Math.pow(cx - ox, 2) + Math.pow(cy - oy, 2));
+                if (r === 0) r = 4;
+            }
+
+            // 2. Encuadre base (Círculo completo + margen visual del 40%)
+            let padding = r * 0.4;
+            let minX = ox - r - padding;
+            let maxX = ox + r + padding;
+            let minY = oy - r - padding;
+            let maxY = oy + r + padding;
+
+            // 3. Si es un ángulo exterior, ampliamos el encuadre para incluir su vértice correspondiente
+            let verticeName = null;
+            if (type === 'exterior') verticeName = 'E';
+            if (type === 'ext_sectan') verticeName = 'I';
+            if (type === 'ext_tantan') verticeName = 'J';
+
+            if (verticeName && ggbApp.exists(verticeName)) {
+                let px = ggbApp.getXcoord(verticeName);
+                let py = ggbApp.getYcoord(verticeName);
+                
+                // Límite de seguridad: Si el vértice está exageradamente lejos (más de 30 veces el radio), dejamos de alejar
+                if (Math.abs(px - ox) < (r * 30) && Math.abs(py - oy) < (r * 30)) {
+                    minX = Math.min(minX, px - padding);
+                    maxX = Math.max(maxX, px + padding);
+                    minY = Math.min(minY, py - padding);
+                    maxY = Math.max(maxY, py + padding);
+                }
+            }
+
+            // 4. Mantener la relación de aspecto del applet (500 de ancho x 400 de alto -> 1.25)
+            let width = maxX - minX;
+            let height = maxY - minY;
+            let center_x = (minX + maxX) / 2;
+            let center_y = (minY + maxY) / 2;
+
+            let targetRatio = 500 / 400;
+            let currentRatio = width / height;
+
+            if (currentRatio > targetRatio) {
+                // El encuadre es muy ancho, incrementamos la altura
+                height = width / targetRatio;
+            } else {
+                // El encuadre es muy alto, incrementamos la anchura
+                width = height * targetRatio;
+            }
+
+            // 5. Aplicamos el encuadre final a la cámara de GeoGebra
+            ggbApp.setCoordSystem(center_x - width/2, center_x + width/2, center_y - height/2, center_y + height/2);
+        }
+
+        function updateAngleSim(fromGeoGebra = false) {
+            let type = typeSelect.value;
+            let def = angDefs[type];
+            
+            let el1 = document.getElementById('ang-arc-0');
+            let el2 = document.getElementById('ang-arc-1');
+
+            let a1 = parseFloat(el1?.value) || 0;
+            let a2 = parseFloat(el2?.value) || 0;
+
+            if ((type === 'exterior' || type === 'ext_sectan') && a1 < a2 && !fromGeoGebra) { 
+                a1 = a2; 
+                if(el1) el1.value = a1; 
+            }
+            if (type === 'interior' && (a1+a2)>360 && !fromGeoGebra) { 
+                a1 = 180; a2 = 180; 
+                if(el1) el1.value = a1; 
+                if(el2) el2.value = a2; 
+            }
+
+            let span1 = document.getElementById('val-ang-arc-0');
+            if(span1) span1.innerText = a1 + '°';
+            
+            let span2 = document.getElementById('val-ang-arc-1');
+            if(span2) span2.innerText = a2 + '°';
+
+            let tex = '';
+            
+            if (type === 'central') {
+                tex = `x = ${a1}^\\circ`;
+            } else if (type === 'inscrito' || type === 'semiinscrito') {
+                let result = def.func(a1);
+                tex = `x = \\frac{${a1}^\\circ}{2} = ${result}^\\circ`;
+            } else if (type === 'interior') {
+                let result = def.func(a1, a2);
+                tex = `x = \\frac{${a1}^\\circ + ${a2}^\\circ}{2} = ${result}^\\circ`;
+            } else if (type === 'exterior' || type === 'ext_sectan') {
+                let result = def.func(a1, a2);
+                tex = `x = \\frac{${a1}^\\circ - ${a2}^\\circ}{2} = ${result}^\\circ`;
+	        } else if (type === 'ext_tantan') {
+                let beta = a1;
+                let alpha = 360 - beta;
+                let result = (alpha - beta) / 2;
+                tex = `
+                    \\begin{aligned}
+                    \\text{Arco Mayor (}\\alpha\\text{)} &= 360^\\circ - \\beta \\\\[0.3em]
+                    \\alpha &= 360^\\circ - ${beta}^\\circ = \\mathbf{${alpha}^\\circ} \\\\[0.8em]
+                    x &= \\frac{\\alpha - \\beta}{2} \\\\[0.3em]
+                    x &= \\frac{${alpha}^\\circ - ${beta}^\\circ}{2} = \\mathbf{${result}^\\circ}
+                    \\end{aligned}
+                `;
+            }
+            
+            renderMath('ang-calc', `\\text{Teorema: } ${def.title} \\\\[0.5em] ${tex}`);
+
+            if (!fromGeoGebra) {
+                updateGeoGebra(); 
+            }
+            
+            // Ejecutamos el zoom dinámico tras cualquier movimiento (sea del HTML o del propio GeoGebra)
+            autoZoomGGB();
+        }
+
+        typeSelect.addEventListener('change', buildAngleInputs);
+
+        // --- TAB 4: CALCULADORAS ---
+        const invType = document.getElementById('inv-type');
+        const invAngleCont = document.getElementById('inv-angle-container');
         
-        let html = val === 'arco' 
-            ? `<div class="step-line"><span class="step-label">Fórmula Arco</span> <math><mi>s</mi><mo>=</mo><mi>C</mi><mo>×</mo><mfrac><mi>θ</mi><mrow><mn>360</mn><mo>°</mo></mrow></mfrac></math></div>
-               <div class="step-line"><span class="step-label">Sustitución</span> <math><mi>s</mi><mo>=</mo><mn>${k}</mn><mi>π</mi><mtext>&nbsp;u</mtext><mo>×</mo><mfrac><mn>${ang}</mn><mn>360</mn></mfrac></math></div>
-               <div class="step-line"><span class="step-label">Respuesta</span> <math><mi>s</mi><mo>=</mo>${frac}</math></div>`
-            : `<div class="step-line"><span class="step-label">Fórmula Sector</span> <math><msub><mi>A</mi><mi>sec</mi></msub><mo>=</mo><mi>A</mi><mo>×</mo><mfrac><mi>θ</mi><mrow><mn>360</mn><mo>°</mo></mrow></mfrac></math></div>
-               <div class="step-line"><span class="step-label">Sustitución</span> <math><msub><mi>A</mi><mi>sec</mi></msub><mo>=</mo><mn>${k}</mn><mi>π</mi><mtext>&nbsp;</mtext><msup><mi>u</mi><mn>2</mn></msup><mo>×</mo><mfrac><mn>${ang}</mn><mn>360</mn></mfrac></math></div>
-               <div class="step-line"><span class="step-label">Respuesta</span> <math><msub><mi>A</mi><mi>sec</mi></msub><mo>=</mo>${frac}</math></div>`;
-        resProporcional.innerHTML = html;
-    }
+        invType.addEventListener('change', () => {
+            if(invType.value === 'arco') invAngleCont.classList.remove('hidden');
+            else invAngleCont.classList.add('hidden');
+        });
 
-    // Inicializar
-    selProporcional.dispatchEvent(new Event('change'));
-    updateLaboratorio(); updateConversiones(); buildInversoInputs(); updateSimuladorAngulos();
+        function calcInverse() {
+            let type = invType.value;
+            let val = parseFloat(document.getElementById('inv-val').value) || 0;
+            let tex = '';
+            
+            if (type === 'area') {
+                tex = `
+                    \\begin{aligned}
+                    A &= \\pi r^2 \\\\[0.5em]
+                    ${val} &= \\pi r^2 \\\\[0.5em]
+                    r^2 &= \\frac{${val}}{\\pi} \\\\[0.5em]
+                    r &= \\mathbf{\\sqrt{\\frac{${val}}{\\pi}} \\text{ u}}
+                    \\end{aligned}
+                `;
+            } else if (type === 'perim') {
+                let simpPerim = `\\frac{${val}}{2\\pi}`;
+                if (Number.isInteger(val) && val % 2 === 0) {
+                    simpPerim = `\\frac{${val/2}}{\\pi}`;
+                }
+                tex = `
+                    \\begin{aligned}
+                    C &= 2\\pi r \\\\[0.5em]
+                    ${val} &= 2\\pi r \\\\[0.5em]
+                    r &= \\mathbf{${simpPerim} \\text{ u}}
+                    \\end{aligned}
+                `;
+            } else if (type === 'arco') {
+                let theta = parseFloat(document.getElementById('inv-ang').value) || 1;
+                let exactR = `\\frac{${val * 180}}{${theta}\\pi}`;
+                
+                // Simplificación exacta si ambos son enteros
+                if (Number.isInteger(val) && Number.isInteger(theta)) {
+                    let d = gcd(val * 180, theta);
+                    let sNum = (val * 180) / d;
+                    let sDen = theta / d;
+                    exactR = sDen === 1 ? `\\frac{${sNum}}{\\pi}` : `\\frac{${sNum}}{${sDen}\\pi}`;
+                }
 
-</script>
+                tex = `
+                    \\begin{aligned}
+                    L &= \\frac{\\theta \\pi r}{180^\\circ} \\\\[0.5em]
+                    ${val} &= \\frac{${theta}^\\circ \\cdot \\pi \\cdot r}{180^\\circ} \\\\[0.5em]
+                    r &= \\frac{${val} \\cdot 180^\\circ}{${theta}^\\circ \\cdot \\pi} = \\mathbf{${exactR} \\text{ u}}
+                    \\end{aligned}
+                `;
+            }
+            renderMath('inv-result', tex);
+        }
+
+        function calcProportional() {
+            let theta = parseFloat(document.getElementById('prop-ang').value) || 0;
+            let perim = parseFloat(document.getElementById('prop-perim').value) || 0;
+            let area = parseFloat(document.getElementById('prop-area').value) || 0;
+
+            let fracStr = `\\frac{${theta}}{360}`;
+            let d = gcd(Math.round(theta), 360);
+            let simFrac = d > 1 ? ` = \\frac{${Math.round(theta)/d}}{${360/d}}` : '';
+            let proportion = theta / 360;
+
+            let calcArc = proportion * perim;
+            let calcArea = proportion * area;
+
+            let tex = `
+                \\begin{aligned}
+                \\text{Proporción (}K\\text{)} &= \\frac{\\theta}{360^\\circ} = ${fracStr} ${simFrac} \\\\[1em]
+                \\text{Longitud del Arco} &= K \\times \\text{Perímetro} \\\\[0.3em]
+                &= \\frac{${Math.round(theta)/d}}{${360/d}} \\times ${perim} = \\mathbf{${calcArc.toFixed(2)}} \\\\[1em]
+                \\text{Área del Sector} &= K \\times \\text{Área Total} \\\\[0.3em]
+                &= \\frac{${Math.round(theta)/d}}{${360/d}} \\times ${area} = \\mathbf{${calcArea.toFixed(2)}}
+                \\end{aligned}
+            `;
+            renderMath('prop-result', tex);
+        }
+
+        // Initialize
+        document.addEventListener("DOMContentLoaded", () => {
+            // Render Math in all normal text nodes across the body automatically
+            renderMathInElement(document.body, renderMathConfig);
+            updateFromDeg();
+            updateSector();
+            buildAngleInputs();
+        });
+
+    </script>
 </body>
 </html>
