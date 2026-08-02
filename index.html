@@ -38,7 +38,7 @@
 
         <!-- TAB 1: Teoría y Fórmulas -->
         <section id="teoria" class="tab-content active">
-            <div class="grid md:grid-cols-2 gap-6">
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
                 <!-- Definiciones -->
                 <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
                     <h2 class="text-2xl font-bold text-indigo-700 mb-4 flex items-center gap-2">
@@ -50,8 +50,15 @@
                         <li><strong>Círculo:</strong> Es la región plana interior, el área que está delimitada por la circunferencia.</li>
                         <li><strong>Radio ($r$):</strong> Segmento de recta que une el centro con cualquier punto de la circunferencia.</li>
                         <li><strong>Diámetro ($D$):</strong> Cuerda que pasa por el centro. Equivale a dos veces el radio ($D = 2r$).</li>
-                        <li><strong>Arco:</strong> Cualquier porción continua de la circunferencia.</li>
+			<li><strong>Cuerda:</strong> Es un segmento cuyos extremos están en la circunferencia.</li>
+			<li><strong>Secante:</strong> Es una recta que interseca la circunferencia en dos puntos.</li>
+			<li><strong>Tangente:</strong> Es una recta (en el mismo plano) que corta a la circunferencia en un solo 			punto (llamado punto de tangencia o punto de contacto).</li>
+			<li><strong>Interior de una circunferencia:</strong> Es el conjunto de todos los puntos del plano cuyas distancias al centro son menores que el radio.</li>
+			<li><strong>Exterior de una circunferencia:</strong> Es el conjunto de todos los puntos del plano cuyas distancias al centro son mayores que el radio.</li>
+			<li><strong>Arco:</strong> Cualquier porción continua de la circunferencia. Dados tres puntos $A$, $B$ y $C$ en una circunferencia con centro $O$ (donde dos de ellos no son los extremos de un diámetro), un arco se forma por la unión de sus puntos extremos y los puntos de la circunferencia contenidos en un ángulo central. El <strong>arco menor</strong> ($\widehat{AB}$) es la unión de $A$, $B$ y los puntos en el interior del $\angle AOB$. El <strong>arco mayor</strong> ($\widehat{ACB}$) es la unión de $A$, $B$ y los puntos en el exterior de dicho ángulo. En ambos casos, $A$ y $B$ son los extremos de los arcos, y su medida o longitud se simboliza como $m\widehat{AB}$.</li>
+			<img src="image_8934742b.png" alt="Diagrama de arco menor y arco mayor en una circunferencia" width="350">
                         <li><strong>Sector Circular:</strong> Porción del círculo limitada por dos radios y el arco comprendido entre ellos.</li>
+			<li><strong>Concentricidad:</strong>Dos o más circunferencias con el mismo centro se llaman concéntricas.</li>
                     </ul>
                 </div>
 
@@ -81,7 +88,98 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Neva fila de Teoría -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Grados y Radianes -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                    <h2 class="text-2xl font-bold text-indigo-700 mb-4 flex items-center gap-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Sistemas de Medición Angular
+                    </h2>
+                    <ul class="space-y-4 text-slate-700 text-sm md:text-base">
+                        <li><strong>Grado Sexagesimal ($^\circ$):</strong> Es una medida arbitraria que resulta de dividir un giro completo (una circunferencia entera) en 360 partes iguales. Una vuelta equivale a $360^\circ$.</li>
+                        <li><strong>Radián (rad):</strong> Es la medida del ángulo central cuyo arco intersecado tiene una longitud <em>exactamente igual</em> al radio ($r$) de la circunferencia. Es una medida basada en las dimensiones reales de la figura. Una vuelta equivale a $2\pi$ radianes.</li>
+                        <li class="bg-indigo-50 p-3 rounded-lg border border-indigo-100 text-indigo-900 mt-2">
+                            <strong>Diferencia Principal:</strong> El grado es una convención histórica (útil para uso cotidiano), mientras que el <strong>radián</strong> es la unidad matemática "natural". Al usar radianes, se establece una relación directa entre las distancias reales (radio y arco), lo que simplifica fórmulas matemáticas (Ej: $L = \theta \cdot r$).
+                        </li>
+                    </ul>
+                </div>
+<!-- Fórmulas de Conversión de Ángulos-->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                    <h2 class="text-2xl font-bold text-indigo-700 mb-4 flex items-center gap-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                        Fórmulas de Conversión de Ángulos
+                    </h2>
+                    <div class="space-y-5 text-lg">
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                            <span class="block text-sm text-slate-500 font-semibold mb-1">Grados a Radián</span>
+                            <div id="f-inp-deg"> $$\text{Rad} = \text{Grados} \times \frac{\pi}{180^\circ}$$ </div>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                            <span class="block text-sm text-slate-500 font-semibold mb-1">Radián a Grados</span>
+                            <div id="f-inp-rad">$$ \text{Grados} = \text{Rad} \times \frac{180^\circ}{\pi}$$ </div>
+                        </div>
+		    </div>
+		 </div>
+	     </div>
+        <!-- Neva fila de Fórmulas -->
+          <div class="grid md:grid-cols-2 gap-6">
+	 <!-- Tipos de Ángulos -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                    <h2 class="text-2xl font-bold text-indigo-700 mb-4 flex items-center gap-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+                        Ángulos en la Circunferencia
+                    </h2>
+                    <ul class="space-y-4 text-slate-700 text-sm md:text-base">
+                        <li><em>Los ángulos formados por radios, cuerdas, secantes o tangentes en un circunferencia posee una medida, se puede encontrar dada la medida angular del arco (no su longitud) sin necesidad de conocer la medida del radio de la circunferencia. Estas rectas o cuerdas formar arcos, un arco menor llamado $\beta$ y un arco mayor llamado $\alpha$.</em></li>
+                        <li><strong>Ángulo Central:</strong> Su vértice es el <strong>centro</strong> de la circunferencia y sus lados son dos radios. Su medida es igual a la medida de su arco intersecado.</li>
+                        <li><strong>Ángulo Inscrito:</strong> Su vértice es un punto <strong>sobre</strong> la circunferencia y sus lados son dos cuerdas. Su medida es la <em>mitad</em> del arco interceptado.</li>
+                        <li><strong>Ángulo Semi-inscrito:</strong> Su vértice está <strong>sobre</strong> la circunferencia, pero sus lados los forman una cuerda y una recta tangente. Su medida es la <em>mitad</em> del arco que abarca su cuerda.</li>
+                        <li><strong>Ángulo Interior:</strong> Su vértice está en el <strong>interior</strong> de la circunferencia (distinto al centro). Lo forman dos cuerdas secantes. Su medida es la <em>semisuma</em> de los dos arcos que intersecan las cuerdas cruzadas.</li>
+                        <li><strong>Ángulo Exterior:</strong> Su vértice está en el <strong>exterior</strong> de la circunferencia. Lo forman rectas secantes o tangentes. Su medida es la <em>semidiferencia</em> (resta dividida entre dos) del arco mayor menos el arco menor.</li>
+                    </ul>
+                </div>
+	<!-- Fórmulas de Tipos de Ángulos-->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                    <h2 class="text-2xl font-bold text-indigo-700 mb-4 flex items-center gap-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                        Fórmulas de Tipos de Ángulos
+                    </h2>
+		    <div class="space-y-5 text-lg">
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                            <span class="block text-center text-sm text-slate-500 font-semibold mb-1">Ángulo Central</span>
+                            <div id="f-central"> $$x^\circ = \beta$$ </div>
+			</div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                            <span class="block text-center text-sm text-slate-500 font-semibold mb-1">Ángulo Inscrito</span>
+                            <div id="f-inscrito"> $$x^\circ = \frac{\beta}{2}$$ </div>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                            <span class="block text-center text-sm text-slate-500 font-semibold mb-1">Ángulo Semi-inscrito</span>
+                            <div id="f-semiinscrito"> $$x^\circ = \frac{\beta}{2}$$ </div>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                            <span class="block text-center text-sm text-slate-500 font-semibold mb-1">Ángulo Interior</span>
+                            <div id="f-interior"> $$x^\circ = \frac{\alpha + \beta}{2}$$ </div>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                            <span class="block text-center text-sm text-slate-500 font-semibold mb-1">Ángulo Exterior por dos Secantes o Cuerdas</span>
+                            <div id="f-exterior"> $$x^\circ = \frac{\alpha - \beta}{2}$$ </div>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                            <span class="block text-center text-sm text-slate-500 font-semibold mb-1">Ángulo Exterior por una Secante y una Tangente</span>
+                            <div id="f-ext_sectan"> $$x^\circ = \frac{\alpha - \beta}{2}$$ </div>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                            <span class="block text-center text-sm text-slate-500 font-semibold mb-1">Ángulo Exterior por dos Tangentes</span>
+                            <div id="f-ext_tantan"> $$x^\circ = \frac{\alpha - \beta}{2} \qquad \text{; con } \alpha = 360^\circ - \beta$$ </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
+
 
         <!-- TAB 2: Convertidor -->
         <section id="convertidor" class="tab-content">
@@ -122,7 +220,7 @@
                 
                 <!-- Simulador de Arco y Sector -->
                 <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
-                    <h2 class="text-2xl font-bold text-indigo-700 mb-6 border-b pb-2">1. Simulador Dinámico de Sector Circular y Arco</h2>
+                    <h2 class="text-2xl font-bold text-indigo-700 mb-6 border-b pb-2">1. Simulador Dinámico de Círculo, Circunferencia,  Arco y Sector Circular</h2>
                     <div class="grid md:grid-cols-2 gap-8 items-center">
                         <div>
                             <canvas id="sectorCanvas" width="400" height="400" class="w-full max-w-[400px] mx-auto bg-slate-50 rounded-full shadow-inner border border-slate-200"></canvas>
@@ -492,11 +590,11 @@ if(frac){
 
             let resTex = `
                 \\begin{aligned}
-                \\text{Long. Arco (}L\\text{)} &= \\frac{${theta}^\\circ \\cdot \\pi \\cdot ${r}}{180^\\circ} = \\mathbf{${exactL} \\text{ cm}} \\\\[0.8em]
-                \\text{Área Sector (}A_s\\text{)} &= \\frac{${theta}^\\circ \\cdot \\pi \\cdot ${r}^2}{360^\\circ} = \\mathbf{${exactA} \\text{ cm}^2} \\\\[0.8em]
-                \\text{Circunferencia (}C\\text{)} &= 2 \\cdot \\pi \\cdot ${r} = \\mathbf{${exactC} \\text{ cm}} \\\\[0.8em]
-                \\text{Área Círculo (}A_c\\text{)} &= \\pi \\cdot ${r}^2 = \\mathbf{${exactAc} \\text{ cm}^2}
-                \\end{aligned}
+                \\text{Circunferencia (}C\\text{)} & = 2 \\cdot \\pi \\cdot r = 2 \\cdot \\pi \\cdot ${r} = \\mathbf{${exactC} \\text{ cm}} \\\\[1.0em]
+                \\text{Área Círculo (}A_c\\text{)} & = \\pi \\cdot r^2 =\\pi \\cdot ${r}^2 = \\mathbf{${exactAc} \\text{ cm}^2} \\\\[1.0em]
+		\\text{Long. Arco (}L\\text{)} & = \\frac{\\theta^\\circ \\cdot \\pi \\cdot r}{180^\\circ} = \\frac{${theta}^\\circ \\cdot \\pi \\cdot ${r}}{180^\\circ} = \\mathbf{${exactL} \\text{ cm}} \\\\[1.0em]
+                \\text{Área Sector (}A_s\\text{)} & = \\frac{\\theta^\\circ \\cdot \\pi \\cdot r^2}{360^\\circ} =\\frac{${theta}^\\circ \\cdot \\pi \\cdot ${r}^2}{360^\\circ} = \\mathbf{${exactA} \\text{ cm}^2}
+		\\end{aligned}
             `;
             renderMath('res-sector', resTex);
 
